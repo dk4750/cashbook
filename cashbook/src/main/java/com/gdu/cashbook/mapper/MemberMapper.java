@@ -8,6 +8,9 @@ import com.gdu.cashbook.vo.Member;
 // 매퍼기능 에노테이션
 @Mapper
 public interface MemberMapper {
+	// 아이디 중복확인.
+	public String selectMemberId(String memberIdCheck);
+	
 	// 로그인 멤버 셀럭트하기. 리턴값으로 로그인멤버 매개변수로도 로그인멤버.
 	public LoginMember selectLoginMember(LoginMember loginMember);
 	

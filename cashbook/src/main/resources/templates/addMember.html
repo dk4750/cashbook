@@ -26,10 +26,7 @@
 	$(document).ready(function(){
 		$('#btn').click(function(){
 			helperInit();
-			if($('#memberId').val().length < 4) {
-				$('#idHelper').text("아이디를 4글자 이상 입력해주세요.");
-				$('#memberId').focus();
-			} else if($('#memberPw').val().length < 4) {
+			if($('#memberPw').val().length < 4) {
 				$('#pwHelper').text("비밀번호를 4글자 이상 입력해주세요.");
 				$('#memberPw').focus();
 			} else if($('#memberPw').val() != $('#memberPw2').val()) {
@@ -51,6 +48,24 @@
 				$('#myForm').submit();
 			}
 		});
+		
+		// 중복확인 서브밋 엔터키 키다운
+		$('#idForm').keydown(function() {
+			if (event.keyCode === 13) {
+				event.preventDefault();
+			};
+		});
+		
+		<!-- 중복확인 폼 클릭시 -->
+		$('#idBtn').click(function(){
+			helperInit();
+			if($('#memberIdCheck').val().length < 4) {
+				$('#idHelper').text("아이디를 4글자 이상 입력해주세요.");
+				$('#memberIdCheck').focus();
+			} else {
+				$('#idForm').submit();
+			}
+		});
 	});
 </script>
 <style>
@@ -65,41 +80,54 @@
 	  		<div class="col-3"></div>
 	  		<div class="col-6">
 	  			<br>
-				<h1 style="margin: 40px; text-align:center">회원가입</h1>
-				<br>
+				<h1 style="margin: 20px; text-align:center">회원가입</h1>
+				
+				<!-- 중복확인 폼 -->
+				<form id="idForm" method="post" action="/checkMemberId">
+					아이디 중복확인<br>
+					<div class="input-group mb-3">
+  						<input type="text" name="memberIdCheck" id="memberIdCheck" placeholder="아이디를 입력하세요." class="form-control">
+  						<div class="input-group-append">
+    						<button type="button" id="idBtn" class="btn btn-primary">중복확인</button>
+    					</div>
+    				</div>
+    				<span id="idHelper"></span>
+    				<span th:text="${msg}"></span>
+				</form>
+				
+				<!-- 회원가입 폼 -->
 				<form id = "myForm" method = "post" action="/addMember">
 					<div>
 						아이디<br>
-						<input type="text" name="memberId" id="memberId" class="form-control">
-						<span id="idHelper"></span>
+						<input type="text" name="memberId" id="memberId" class="form-control" readonly="readonly" th:value="${memberIdCheck}">
 					</div><br>
 					<div>
 						비밀번호<br>
-						<input type="password" name="memberPw" id="memberPw" class="form-control">
+						<input type="password" name="memberPw" id="memberPw" class="form-control" placeholder="비밀번호를 입력하세요.">
 						<span id="pwHelper"></span>
 					</div><br>
 					<div>
 						비밀번호 확인<br>
-						<input type="password" id="memberPw2" class="form-control">
+						<input type="password" id="memberPw2" class="form-control" placeholder="비밀번호를 한번 더 입력하세요.">
 					</div><br>
 					<div>
 						회원 이름<br>
-						<input type="text" name="memberName" id="memberName" class="form-control">
+						<input type="text" name="memberName" id="memberName" class="form-control" placeholder="회원님의 이름을 입력하세요.">
 						<span id="nameHelper"></span>
 					</div><br>
 					<div>
 						주소<br>
-						<input type="text" name="memberAddr" id="memberAddr" class="form-control">
+						<input type="text" name="memberAddr" id="memberAddr" class="form-control" placeholder="주소를 입력하세요.">
 						<span id="addrHelper"></span>
 					</div><br>
 					<div>
 						휴대폰번호<br>
-						<input type="text" name="memberPhone" id="memberPhone" class="form-control">
+						<input type="text" name="memberPhone" id="memberPhone" class="form-control" placeholder="전화번호를 입력하세요.">
 						<span id="phoneHelper"></span>
 					</div><br>
 					<div>
 						이메일<br>
-						<input type="text" name="memberMail" id="memberMail" class="form-control">
+						<input type="text" name="memberMail" id="memberMail" class="form-control" placeholder="이메일을 입력하세요.">
 						<span id="mailHelper"></span>
 					</div><br><br>
 					<div>

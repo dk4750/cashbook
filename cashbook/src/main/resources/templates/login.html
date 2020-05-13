@@ -15,6 +15,7 @@
 	let helperInit = function() {
 		$('#idHelper').text("");
 		$('#pwHelper').text("");
+		$('#msg').text("");
 	}
 
 	$(document).ready(function(){
@@ -46,17 +47,22 @@
 		<div class = "row">
 			<div class="col-3"></div>
 			<div class="col-6">
+				<!-- 제목 -->
 				<h1 style="margin: 40px; text-align:center">로그인</h1>
+				<!-- 로그인 폼 -->
 				<form method="post" action="/login" id="myForm">
 					<div>
 						아이디<br>
-						<input type="text" name="memberId" id="memberId" class="form-control">
+						<input type="text" name="memberId" id="memberId" class="form-control" placeholder="아이디를 입력하세요.">
 						<span id="idHelper"></span>
 					</div><br>
 					<div>
 						비밀번호<br>
-						<input type="password" name="memberPw" id="memberPw" class="form-control">
+						<input type="password" name="memberPw" id="memberPw" class="form-control" placeholder="비밀번호를 입력하세요.">
 						<span id="pwHelper"></span>
+					</div>
+					<div>
+						<span id="msg" th:text="${msg}"></span>
 					</div><br>
 					<p><a href="">아이디 / 비밀번호 찾기</a></p>
 					<br>

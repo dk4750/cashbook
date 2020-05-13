@@ -16,6 +16,11 @@ public class MemberService {
 	@Autowired
 	private MemberMapper memberMapper;
 	
+	// 멤버 아이디 중복확인
+	public String CheckMemberId(String memberIdCheck) {
+		return memberMapper.selectMemberId(memberIdCheck);
+	}
+	
 	// 멤버 로그인. 리턴값은 로그인멤버
 	public LoginMember login(LoginMember loginMember) {
 		return memberMapper.selectLoginMember(loginMember);

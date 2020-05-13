@@ -5,6 +5,13 @@
 <!-- 네임스페이스는 매퍼의 위치와 매퍼의 이름 -->
 <mapper namespace="com.gdu.cashbook.mapper.MemberMapper">
 	<!-- id는 매퍼의 메소드이름과 동일하게.	파라미터타입은 항상 리스트. 클래스데이터타입의 위치와 이름을 작성 -->
+	<!-- 멤버 아이디 중복체크 -->
+	<select id="selectMemberId" parameterType="String" resultType="String">
+		SELECT
+			member_id as memberId
+		FROM member
+		WHERE member_id = #{memberIdCheck}
+	</select>
 	
 	<!-- 멤버 셀렉트 -->
 	<select id="selectLoginMember" parameterType="com.gdu.cashbook.vo.LoginMember" resultType="com.gdu.cashbook.vo.LoginMember">
