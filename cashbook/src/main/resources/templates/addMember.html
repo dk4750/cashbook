@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>addMember</title>
+<title>AddMember</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -12,6 +12,7 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script>
+	<!-- 클릭시 경고창 리셋 -->
 	let helperInit = function() {
 		$('#idHelper').text("");
 		$('#pwHelper').text("");
@@ -21,6 +22,7 @@
 		$('#mailHelper').text("");
 	};
 	
+	<!-- 도큐먼트가 준비되면 클릭 이벤트시 어떠한일을 할것인가 -->
 	$(document).ready(function(){
 		$('#btn').click(function(){
 			helperInit();
@@ -68,7 +70,7 @@
 				<form id = "myForm" method = "post" action="/addMember">
 					<div>
 						아이디<br>
-						<input type="text" name="memberId" id="memberId" class="form-control" >
+						<input type="text" name="memberId" id="memberId" class="form-control">
 						<span id="idHelper"></span>
 					</div><br>
 					<div>
@@ -99,9 +101,9 @@
 						이메일<br>
 						<input type="text" name="memberMail" id="memberMail" class="form-control">
 						<span id="mailHelper"></span>
-					</div><br>
+					</div><br><br>
 					<div>
-						<p><button type="button" id="btn" class="btn btn-primary">회원가입</button></p>
+						<p><button type="button" id="btn" class="btn btn-primary btn-block btn-lg">회원가입</button></p>
 					</div>
 				</form>
 			</div>

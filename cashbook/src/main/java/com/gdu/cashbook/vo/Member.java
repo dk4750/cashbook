@@ -46,6 +46,7 @@ public class Member {
 		this.memberMail = memberMail;
 	}
 	
+	// toString() 메소드..
 	@Override
 	public String toString() {
 		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName

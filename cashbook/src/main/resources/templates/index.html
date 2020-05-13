@@ -23,6 +23,11 @@
 	p {
 		text-align: center;
 	}
+	
+	#logout {
+		text-align: right;
+	}
+	
 </style>
 </head>
 <body>
@@ -30,9 +35,17 @@
 		<div class="row">
 	  		<div class="col-3"></div>
 	  		<div class="col-6">
+	  			<!-- 제목 -->
 				<br><h1 style="text-align: center; margin: 40px">Cash Book</h1><br>
-				<p><a href = "" class = "btn btn-primary">로그인</a></p><br>
-				<p><a href = "/addMember" class = "btn btn-primary">회원가입</a></p>
+				
+				<!-- 세션 분기 로그인시 로그아웃 버튼 나오게끔. -->
+				<p id="logout" th:if="${session.loginMember != null}"><a href="/logout" class = "btn btn-danger">로그아웃</a></p>
+				<!--
+				<div th:if="${session.loginMember != null}" th:text="ON"></div>
+				<div th:if="${session.loginMember == null}" th:text="OFF"></div>
+				-->
+				<p><a href = "/login" class = "btn btn-primary btn-block btn-lg">로그인</a></p><br>
+				<p><a href = "/addMember" class = "btn btn-primary btn-block btn-lg">회원가입</a></p>
 				<br><br>
 				
 				<div class = "small" style="text-align:center">

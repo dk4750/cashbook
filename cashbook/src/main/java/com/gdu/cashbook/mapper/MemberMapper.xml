@@ -2,10 +2,37 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 네임스페이스는 매퍼의 위치와 매퍼의 이름 -->
 <mapper namespace="com.gdu.cashbook.mapper.MemberMapper">
+	<!-- id는 매퍼의 메소드이름과 동일하게.	파라미터타입은 항상 리스트. 클래스데이터타입의 위치와 이름을 작성 -->
+	
+	<!-- 멤버 셀렉트 -->
+	<select id="selectLoginMember" parameterType="com.gdu.cashbook.vo.LoginMember" resultType="com.gdu.cashbook.vo.LoginMember">
+		SELECT
+			member_id as memberId,
+			member_pw as memberPw
+		FROM member
+		WHERE member_id = #{memberId}
+		AND member_pw = #{memberPw}
+	</select>
+	
+	<!-- 멤버 인서트 -->
 	<insert id="addMember" parameterType="com.gdu.cashbook.vo.Member">
-		INSERT INTO member
-						(member_id, member_pw, member_name, member_phone, member_addr, member_mail)
-		VALUES(#{memberId}, #{memberPw}, #{memberName}, #{memberPhone}, #{memberAddr}, #{memberMail})
+		INSERT INTO member(
+			member_id,
+			member_pw,
+			member_name,
+			member_phone,
+			member_addr,
+			member_mail
+		) VALUES (
+			#{memberId},
+			#{memberPw},
+			#{memberName},
+			#{memberPhone},
+			#{memberAddr},
+			#{memberMail}
+		)
 	</insert>
+	
 </mapper>
