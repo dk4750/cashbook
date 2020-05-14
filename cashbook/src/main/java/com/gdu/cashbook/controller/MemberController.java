@@ -17,6 +17,74 @@ import com.gdu.cashbook.vo.Member;
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
+	
+	// 멤버 삭제 액션 (포스트)
+	@PostMapping("/removeMember")
+	public String removeMember(HttpSession session, Model model, LoginMember loginMember) {
+		int result = memberService.removeMember(loginMember);
+		System.out.println(result);
+		if(result == 1) {
+			session.invalidate();
+			return "redirect:/index";
+		} else {
+			model.addAttribute("msg", "회원 정보가 일치하지 않습니다.");
+			return "removeMember";
+			
+		}
+	}
+	
+	// 멤버 삭제 폼 겟
+	@GetMapping("/removeMember")
+	public String removeMember(HttpSession session, LoginMember loginMember, Model model) {
+		if(session.getAttribute("loginMember") == null) {
+			return "redirect:/login";
+		}
+		model.addAttribute("loginMember", loginMember);
+		
+		return "removeMember";
+	}
+	
+	// 멤버 정보 수정 폼 겟
+	@GetMapping("/modifyMember")
+	public String modifyMember(HttpSession session, Model model, LoginMember loginMember) {
+		System.out.println(loginMember);
+		String loginMemberId = loginMember.getMemberId();
+		Member member = memberService.getMemberOne(loginMember);
+		System.out.println(member);
+		
+		model.addAttribute("loginMemberId", loginMemberId);
+		model.addAttribute("member", member);
+		
+		return "modifyMember";
+	}
+	
+	// 멤버 수정 포스트
+	@PostMapping("/modifyMember")
+	public String modifyMember(Member member) {
+		System.out.println("member : " + member);
+		
+		memberService.modifyMember(member);
+		
+		return "redirect:/memberInfo";
+	}
+	
+	// 멤버 한명의 상세정보 출력하는 폼
+	@GetMapping("/memberInfo")
+	public String memberInfo(HttpSession session, Model model) {
+		// 비로그인 상태일시 로그인창으로 리디렉트
+		if(session.getAttribute("loginMember") == null) {
+			return "redirect:/login";
+		}
+		
+		// 리턴받은 멤버를 저장하고 모델에 담아서 보내주기
+		// session.getAttribute 는 오브젝트타입이기때문에 형변환이 필요하다..
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		Member member = memberService.getMemberOne(loginMember);
+		model.addAttribute("member", member);
+		
+		// 멤버상세정보 폼으로 이동
+		return "memberInfo";
+	}
 
 	// 아이디 중복확인
 	@PostMapping("/checkMemberId")
@@ -77,14 +145,7 @@ public class MemberController {
 			return "login";
 		} else {	// 로그인 성공시
 			session.setAttribute("loginMember", returnLoginMember);
-			return "redirect:/index";
+			return "redirect:/home";
 		}
-	}
-	
-	// 로그아웃
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		session.invalidate();
-		return "redirect:/index";
 	}
 }

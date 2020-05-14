@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#btn').click(function(){
+			$('#form').submit();
+		});
+	});
+</script>
+</head>
+<body>
+	<h1>회원탈퇴</h1>
+	<form method="post" action="/removeMember" id="form">
+		<div>
+			아이디
+			<input type="text" name="memberId" th:value="${loginMember.memberId}" readonly="readonly">
+		</div>
+		<div>
+			비밀번호
+			<input type="password" name="memberPw">
+		</div>
+		<span th:text="${msg}"></span>
+		<div>
+			<button type="button" id="btn">회원탈퇴</button>
+		</div>
+	</form>
+</body>
+</html>

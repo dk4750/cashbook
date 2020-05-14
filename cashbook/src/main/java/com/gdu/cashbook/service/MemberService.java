@@ -1,5 +1,8 @@
 package com.gdu.cashbook.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +18,22 @@ import com.gdu.cashbook.vo.Member;
 public class MemberService {
 	@Autowired
 	private MemberMapper memberMapper;
+	
+	// 멤버 삭제
+	public int removeMember(LoginMember loginMember) {
+		return memberMapper.removeMember(loginMember);
+		
+	}
+	
+	// 멤버 정보 수정
+	public void modifyMember(Member member) {
+		memberMapper.modifyMember(member);
+	}
+	
+	// 멤버 한명 상세정보 출력
+	public Member getMemberOne(LoginMember loginMember) {
+		return memberMapper.selectMemberOne(loginMember);
+	}
 	
 	// 멤버 아이디 중복확인
 	public String CheckMemberId(String memberIdCheck) {
