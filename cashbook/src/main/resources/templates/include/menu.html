@@ -5,27 +5,28 @@
 <body>
 	<!-- /include/menu::sidemenu -->
 	<div th:fragment="sidemenu">
-		<div><span th:text="${session.loginMember.memberId}"></span>님</div>
-		<nav class="navbar bg-light navbar-nav">
+		<div><span th:text="${session.loginMember.memberId}"></span> 님</div>
+		<nav class="navbar bg-primary navbar-nav">
 			<ul class ="flex-column">
 				<li class="nav-item">
-					<a class="nav-link" th:href="@{/home}">HOME</a>
+					<a class="nav-link" th:href="@{/home}" style="color : black">HOME</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" th:href="@{/memberInfo}">회원정보</a>
+					<a class="nav-link" th:href="@{/memberInfo}" style="color : black">회원정보</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" th:href="@{/cashbookList}">가계부관리</a>
+					<a class="nav-link" th:href="@{/cashbookList}" style="color : black">가계부관리</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" th:href="@{/boardList}">게시판</a>
+					<a class="nav-link" th:href="@{/boardList}" style="color : black">게시판</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" th:href="@{/logout}">로그아웃</a>
+					<a class="nav-link" th:href="@{/logout}" style="color : black">로그아웃</a>
 				</li>
 			</ul>
 		</nav>
 	</div>
+	
 	<!-- fragment -->
 	
 	<!-- fragment -->

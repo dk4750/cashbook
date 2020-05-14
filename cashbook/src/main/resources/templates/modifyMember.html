@@ -45,52 +45,72 @@
 		});
 	});
 </script>
+<style>
+	#sidemenu {
+		float: left;
+	}
+</style>
 </head>
 <body>
-	<h1>회원정보 수정</h1>
-	<form method="post" action="/modifyMember" id="form">
-		<table border="1">
-			<tr>
-				<td>아이디</td>
-				<td>
-					<input type="text" name="memberId" id="memberId" th:value="${member.memberId}" readonly="readonly">
-				</td>
-			</tr>
-			<tr>
-				<td>이름</td>
-				<td>
-					<input type="text" name="memberName" id="memberName" th:value="${member.memberName}">
-				</td>
-			</tr>
-			<tr>
-				<td>전화번호</td>
-				<td>
-					<input type="text" name="memberPhone" id="memberPhone" th:value="${member.memberPhone}">
-				</td>
-			</tr>
-			<tr>
-				<td>주소</td>
-				<td>
-					<input type="text" name="memberAddr" id="memberAddr" th:value="${member.memberAddr}">
-				</td>
-			</tr>
-			<tr>
-				<td>이메일</td>
-				<td>
-					<input type="text" name="memberMail" id="memberMail" th:value="${member.memberMail}">
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<button type = "button" id="btn">수정</button>
-				</td>
-			</tr>
-		</table>
-		<span id="idHelper"></span>
-		<span id="nameHelper"></span>
-		<span id="addrHelper"></span>
-		<span id="phoneHelper"></span>
-		<span id="mailHelper"></span>
-	</form>
+	<div id="sidemenu" th:include="/include/menu::sidemenu"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-3"></div>
+			<div class="col-6">
+				<h1 style="margin: 45px; text-align:center">회원정보 수정</h1>
+				<form method="post" action="/modifyMember" id="form">
+					<table class="table table table-hover">
+						<tr>
+							<td>아이디</td>
+							<td>
+								<input type="text" name="memberId" id="memberId" th:value="${member.memberId}" class="form-control" readonly="readonly">
+							</td>
+						</tr>
+						<tr>
+							<td>비밀번호</td>
+							<td>
+								<input type="password" name="memberPw" id="memberPw" th:value="${member.memberName}" class="form-control">
+							</td>
+						</tr>
+						<tr>
+							<td>이름</td>
+							<td>
+								<input type="text" name="memberName" id="memberName" th:value="${member.memberName}" class="form-control">
+							</td>
+						</tr>
+						<tr>
+							<td>전화번호</td>
+							<td>
+								<input type="text" name="memberPhone" id="memberPhone" th:value="${member.memberPhone}" class="form-control">
+							</td>
+						</tr>
+						<tr>
+							<td>주소</td>
+							<td>
+								<input type="text" name="memberAddr" id="memberAddr" th:value="${member.memberAddr}" class="form-control">
+							</td>
+						</tr>
+						<tr>
+							<td>이메일</td>
+							<td>
+								<input type="text" name="memberMail" id="memberMail" th:value="${member.memberMail}" class="form-control">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<button type = "button" id="btn" class="btn btn-primary btn-block">수정</button>
+							</td>
+						</tr>
+					</table>
+					<span id="idHelper"></span>
+					<span id="nameHelper"></span>
+					<span id="addrHelper"></span>
+					<span id="phoneHelper"></span>
+					<span id="mailHelper"></span>
+				</form>
+			</div>
+			<div class="col-3"></div>
+		</div>
+	</div>
 </body>
 </html>

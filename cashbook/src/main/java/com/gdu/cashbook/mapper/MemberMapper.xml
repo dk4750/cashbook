@@ -6,17 +6,27 @@
 <mapper namespace="com.gdu.cashbook.mapper.MemberMapper">
 	<!-- id는 매퍼의 메소드이름과 동일하게.	파라미터타입은 항상 리스트. 클래스데이터타입의 위치와 이름을 작성 -->
 	
+	<!-- 삭제시 memberid 테이블에 추가되는쿼리 -->
+	<insert id="insertMemberId" parameterType="String">
+		INSERT INTO memberid(
+			member_id
+		) VALUES (
+			#{memberId}
+		)
+	</insert>
+	
 	<!-- 멤버 삭제 -->
 	<delete id="removeMember" parameterType="com.gdu.cashbook.vo.LoginMember">
 		DELETE FROM member
 		WHERE member_id = #{memberId}
-		AND member_pw = #{memberPw}
+		AND member_pw = PASSWORD(#{memberPw})
 	</delete>
 	
 	<!-- 멤버 정보 수정 -->
 	<update id="modifyMember" parameterType="com.gdu.cashbook.vo.Member">
 		UPDATE member
 		SET
+			member_pw = PASSWORD(#{memberPw}),
 			member_name = #{memberName},
 			member_phone = #{memberPhone},
 			member_addr = #{memberAddr},
@@ -26,6 +36,18 @@
 			
 	</update>
 	 
+	<!-- 멤버 한명 정보 전체출력 -->
+	<select id="selectMemberOneAll" parameterType="com.gdu.cashbook.vo.LoginMember" resultType="com.gdu.cashbook.vo.Member">
+		SELECT
+			member_id as memberId,
+			member_pw as memberPw,
+			member_name as memberName,
+			member_phone as memberPhone,
+			member_addr as memberAddr,
+			member_mail as memberMail
+		FROM member
+		WHERE member_id = #{memberId}
+	</select>
 	
 	<!-- 멤버 한명 정보 출력 -->
 	<select id="selectMemberOne" parameterType="com.gdu.cashbook.vo.LoginMember" resultType="com.gdu.cashbook.vo.Member">
@@ -41,9 +63,11 @@
 	
 	<!-- 멤버 아이디 중복체크 -->
 	<select id="selectMemberId" parameterType="String" resultType="String">
-		SELECT
-			member_id as memberId
-		FROM member
+		SELECT member_id
+		FROM
+			(SELECT member_id FROM member
+			UNION
+			SELECT member_id FROM memberid) t
 		WHERE member_id = #{memberIdCheck}
 	</select>
 	
@@ -54,7 +78,7 @@
 			member_pw as memberPw
 		FROM member
 		WHERE member_id = #{memberId}
-		AND member_pw = #{memberPw}
+		AND member_pw = PASSWORD(#{memberPw})
 	</select>
 	
 	<!-- 멤버 인서트 -->
@@ -68,7 +92,7 @@
 			member_mail
 		) VALUES (
 			#{memberId},
-			#{memberPw},
+			PASSWORD(#{memberPw}),
 			#{memberName},
 			#{memberPhone},
 			#{memberAddr},

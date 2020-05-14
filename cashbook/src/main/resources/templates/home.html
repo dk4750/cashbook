@@ -11,18 +11,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
+	#sidemenu {
+		float: left;
+	}
+</style>
 </head>
 <body>
-	<div class = "row">
-		<div class = "col-3">
-			<div th:include="/include/menu::sidemenu"></div>
-		</div>
-		<div class = "col-6">
-		<div class="container">
-			<h1 style="margin: 20px; text-align:center">홈</h1>
-		</div>
-		</div>
-		<div class = "col-3"></div>
-	</div>
+	<div id="sidemenu" th:include="/include/menu::sidemenu"></div>
 </body>
 </html>

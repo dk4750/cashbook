@@ -29,7 +29,6 @@ public class MemberController {
 		} else {
 			model.addAttribute("msg", "회원 정보가 일치하지 않습니다.");
 			return "removeMember";
-			
 		}
 	}
 	
@@ -49,7 +48,7 @@ public class MemberController {
 	public String modifyMember(HttpSession session, Model model, LoginMember loginMember) {
 		System.out.println(loginMember);
 		String loginMemberId = loginMember.getMemberId();
-		Member member = memberService.getMemberOne(loginMember);
+		Member member = memberService.getMemberOneAll(loginMember);
 		System.out.println(member);
 		
 		model.addAttribute("loginMemberId", loginMemberId);
@@ -85,7 +84,7 @@ public class MemberController {
 		// 멤버상세정보 폼으로 이동
 		return "memberInfo";
 	}
-
+	
 	// 아이디 중복확인
 	@PostMapping("/checkMemberId")
 	public String checkMemberId(@RequestParam("memberIdCheck") String memberIdCheck, Model model) {

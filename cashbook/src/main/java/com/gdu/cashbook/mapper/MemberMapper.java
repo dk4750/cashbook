@@ -10,6 +10,12 @@ import com.gdu.cashbook.vo.Member;
 // 매퍼기능 에노테이션, 객체생성
 @Mapper
 public interface MemberMapper {
+	// 삭제시 멤버 아이디가 memberid 테이블에 추가되는 메소드
+	public int insertMemberId(String memberId);
+	
+	// 멤버 한명 정보 전체출력
+	public Member selectMemberOneAll(LoginMember loginMember);
+	
 	// 멤버 삭제
 	public int removeMember(LoginMember loginMember);
 	

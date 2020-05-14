@@ -11,37 +11,56 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
+	#sidemenu {
+        float: left;
+	}
+	p {
+		text-align: right;
+	}
+</style>
 </head>
 <body>
-	<div th:include="/include/menu::sidemenu"></div>
+	<div id="sidemenu" th:include="/include/menu::sidemenu"></div>
+	
 	<div class = "container">
-		<h1>회원정보</h1>
-			<div>
-				<a th:href="@{/removeMember(memberId=${member.memberId})}">회원탈퇴</a>
-				<a th:href="@{/modifyMember(memberId=${member.memberId})}">정보수정</a>
+		<div class="row">
+			<div class="col-3"></div>
+			<div class="col-6">
+				<h1 style="margin: 45px; text-align:center">회원정보</h1>
+					<p><a th:href="@{/modifyMember(memberId=${member.memberId})}" class="btn btn-primary">정보수정</a></p>
+				<table class="table table table-hover">
+					<colgroup>
+				        <col width="300px"/>
+				        <col width="1200px"/>
+				        <col width="900px"/>
+				    </colgroup>
+					<tr>
+						<th>아이디</th>
+						<td th:text="${member.memberId}"></td>
+					</tr>
+					<tr>
+						<th>이름</th>
+						<td th:text="${member.memberName}"></td>
+					</tr>
+					<tr>
+						<th>전화번호</th>
+						<td th:text="${member.memberPhone}"></td>
+					</tr>
+					<tr>
+						<th>주소</th>
+						<td th:text="${member.memberAddr}"></td>
+					</tr>
+					<tr>
+						<th>이메일</th>
+						<td th:text="${member.memberMail}"></td>
+					</tr>
+				</table>
+				<br>
+				<p><a th:href="@{/removeMember(memberId=${member.memberId})}" class="btn btn-danger">회원탈퇴</a></p>
 			</div>
-			<table border="1">
-				<tr>
-					<td>아이디</td>
-					<td th:text="${member.memberId}"></td>
-				</tr>
-				<tr>
-					<td>이름</td>
-					<td th:text="${member.memberName}"></td>
-				</tr>
-				<tr>
-					<td>전화번호</td>
-					<td th:text="${member.memberPhone}"></td>
-				</tr>
-				<tr>
-					<td>주소</td>
-					<td th:text="${member.memberAddr}"></td>
-				</tr>
-				<tr>
-					<td>이메일</td>
-					<td th:text="${member.memberMail}"></td>
-				</tr>
-			</table>
+			<div class="col-3"></div>
+		</div>
 	</div>
 </body>
 </html>

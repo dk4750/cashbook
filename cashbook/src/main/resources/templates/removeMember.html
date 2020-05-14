@@ -18,22 +18,40 @@
 		});
 	});
 </script>
+<style>
+	#sidemenu {
+		float: left;
+	}
+	
+	p {
+		text-align: center;
+	}
+</style>
 </head>
 <body>
-	<h1>회원탈퇴</h1>
-	<form method="post" action="/removeMember" id="form">
-		<div>
-			아이디
-			<input type="text" name="memberId" th:value="${loginMember.memberId}" readonly="readonly">
+	<div id="sidemenu" th:include="/include/menu::sidemenu"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-3"></div>
+			<div class="col-6">
+				<h1 style="margin: 45px; text-align:center">회원탈퇴</h1>
+				<form method="post" action="/removeMember" id="form">
+					<div>
+						아이디
+						<input type="text" name="memberId" th:value="${loginMember.memberId}" readonly="readonly" class="form-control">
+					</div><br>
+					<div>
+						비밀번호
+						<input type="password" name="memberPw" class="form-control" placeholder="본인 확인을 위해 비밀번호를 입력해주세요.">
+					</div>
+					<span th:text="${msg}"></span><br>
+					<div>
+						<p><button type="button" id="btn" class="btn btn-danger btn-block btn-lg">회원탈퇴</button></p>
+					</div>
+				</form>
+			</div>
+			<div class="col-3"></div>
 		</div>
-		<div>
-			비밀번호
-			<input type="password" name="memberPw">
-		</div>
-		<span th:text="${msg}"></span>
-		<div>
-			<button type="button" id="btn">회원탈퇴</button>
-		</div>
-	</form>
+	</div>
 </body>
 </html>
