@@ -18,6 +18,60 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	// 멤버 비밀번호 찾기 겟매핑
+	@GetMapping("/findMemberPw")
+	public String findMemberPw(HttpSession session) {
+		if(session.getAttribute("loginMember") != null) {
+			return "redirect:/";
+		}
+		return "findMemberPw";
+	}
+	
+	// 멤버 비밀번호 찾기 포스트액션
+	@PostMapping("/findMemberPw")
+	public String findMemberPw(HttpSession session, Model model, Member member) {
+		if(session.getAttribute("loginMember") != null) {
+			return "redirect:/";
+		}
+		int row = memberService.getMemberPw(member);
+		String msg = "";
+		String msg2 = "";
+		if(row == 1) {
+			msg2 = "해당 이메일로 임시비밀번호를 전송하였습니다. ";
+			model.addAttribute("msg2", msg2);
+		} else {
+			msg = "회원님의 입력정보와 일치하는 정보가 없습니다.";
+		}
+		model.addAttribute("msg", msg);
+		
+		return "findMemberPw";
+	}
+	
+	// 멤버 아이디 찾기 겟매핑
+	@GetMapping("/findMemberId")
+	public String findMemberId(HttpSession session) {
+		if(session.getAttribute("loginMember") != null) {
+			return "redirect:/";
+		}
+		return "findMemberId";
+	}
+	
+	// 멤버 아이디 찾기 포스트액션
+	@PostMapping("/findMemberId")
+	public String findMemberId(HttpSession session, Model model, Member member) {
+		if(session.getAttribute("loginMember") != null) {
+			return "redirect:/";
+		}
+		String subMemberId = memberService.getMemberIdByMember(member);
+		if(subMemberId == null) {
+			model.addAttribute("msg", "입력하신 정보와 일치하는 아이디가 없습니다.");
+			return "findMemberId";
+		}
+		subMemberId = "회원님의 아이디는 " + subMemberId + " 입니다";
+		model.addAttribute("subMemberId", subMemberId);
+		return "findMemberId";
+	}
+	
 	// 멤버 삭제 액션 (포스트)
 	@PostMapping("/removeMember")
 	public String removeMember(HttpSession session, Model model, LoginMember loginMember) {

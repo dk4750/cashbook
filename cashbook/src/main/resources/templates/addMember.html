@@ -91,8 +91,8 @@
     						<button type="button" id="idBtn" class="btn btn-primary">중복확인</button>
     					</div>
     				</div>
-    				<span id="idHelper"></span>
-    				<span th:text="${msg}"></span>
+    				<span id="idHelper" style="color:red;"></span>
+    				<span th:text="${msg}" style="color:red;"></span>
 				</form>
 				
 				<!-- 회원가입 폼 -->
@@ -104,7 +104,7 @@
 					<div>
 						비밀번호<br>
 						<input type="password" name="memberPw" id="memberPw" class="form-control" placeholder="비밀번호를 입력하세요.">
-						<span id="pwHelper"></span>
+						<span id="pwHelper" style="color:red;"></span>
 					</div><br>
 					<div>
 						비밀번호 확인<br>
@@ -113,22 +113,22 @@
 					<div>
 						회원 이름<br>
 						<input type="text" name="memberName" id="memberName" class="form-control" placeholder="회원님의 이름을 입력하세요.">
-						<span id="nameHelper"></span>
+						<span id="nameHelper" style="color:red;"></span>
 					</div><br>
 					<div>
 						주소<br>
 						<input type="text" name="memberAddr" id="memberAddr" class="form-control" placeholder="주소를 입력하세요.">
-						<span id="addrHelper"></span>
+						<span id="addrHelper" style="color:red;"></span>
 					</div><br>
 					<div>
 						휴대폰번호<br>
 						<input type="text" name="memberPhone" id="memberPhone" class="form-control" placeholder="전화번호를 입력하세요.">
-						<span id="phoneHelper"></span>
+						<span id="phoneHelper" style="color:red;"></span>
 					</div><br>
 					<div>
 						이메일<br>
 						<input type="text" name="memberMail" id="memberMail" class="form-control" placeholder="이메일을 입력하세요.">
-						<span id="mailHelper"></span>
+						<span id="mailHelper" style="color:red;"></span>
 					</div><br><br>
 					<div>
 						<p><button type="button" id="btn" class="btn btn-primary btn-block btn-lg">회원가입</button></p>

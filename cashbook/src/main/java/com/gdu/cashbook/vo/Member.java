@@ -7,8 +7,17 @@ public class Member {
 	private String memberAddr;
 	private String memberMail;
 	private String memberPhone;
+	private String memberPic;
 	
+	// toString()
+	@Override
+	public String toString() {
+		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName
+				+ ", memberAddr=" + memberAddr + ", memberMail=" + memberMail + ", memberPhone=" + memberPhone
+				+ ", memberPic=" + memberPic + "]";
+	}
 	
+	// 겟터 셋터
 	public String getMemberId() {
 		return memberId;
 	}
@@ -27,12 +36,6 @@ public class Member {
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;
 	}
-	public String getMemberPhone() {
-		return memberPhone;
-	}
-	public void setMemberPhone(String memberPhone) {
-		this.memberPhone = memberPhone;
-	}
 	public String getMemberAddr() {
 		return memberAddr;
 	}
@@ -45,11 +48,16 @@ public class Member {
 	public void setMemberMail(String memberMail) {
 		this.memberMail = memberMail;
 	}
-	
-	// toString() 메소드..
-	@Override
-	public String toString() {
-		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName
-				+ ", memberPhone=" + memberPhone + ", memberAddr=" + memberAddr + ", memberMail=" + memberMail + "]";
+	public String getMemberPhone() {
+		return memberPhone;
+	}
+	public void setMemberPhone(String memberPhone) {
+		this.memberPhone = memberPhone;
+	}
+	public String getMemberPic() {
+		return memberPic;
+	}
+	public void setMemberPic(String memberPic) {
+		this.memberPic = memberPic;
 	}
 }

@@ -54,18 +54,18 @@
 					<div>
 						아이디<br>
 						<input type="text" name="memberId" id="memberId" class="form-control" placeholder="아이디를 입력하세요.">
-						<span id="idHelper"></span>
+						<span id="idHelper" style="color:red;"></span>
 					</div><br>
 					<div>
 						비밀번호<br>
 						<input type="password" name="memberPw" id="memberPw" class="form-control" placeholder="비밀번호를 입력하세요.">
-						<span id="pwHelper"></span>
+						<span id="pwHelper" style="color:red;"></span>
 					</div>
-					<div>
-						<span id="msg" th:text="${msg}"></span>
+					<div><br>
+						<span id="msg" th:text="${msg}" style="color:red;"></span>
 					</div><br>
-					<p><a href="">아이디 찾기</a></p>	<!-- 이메일을 입력하면 아이디를 메일로 보내준다 -->
-					<p><a href="">비밀번호 찾기</a></p>	<!-- 아이디와 이메일을 입력하면 관리자가 변경한 비밀번호를 보내준다 -->
+					<p><a th:href="@{/findMemberId}">아이디 찾기</a></p>	<!-- 이름과 이메일 전화번호를 입력하면 아이디를 메일로 보내준다 -->
+					<p><a th:href="@{/findMemberPw}">비밀번호 찾기</a></p>	<!-- 아이디와 이메일을 입력하면 관리자가 변경한 비밀번호를 보내준다 -->
 					<br>
 					<div>
 						<button type="button" id="btn" class="btn btn-primary btn-block btn-lg">로그인</button>

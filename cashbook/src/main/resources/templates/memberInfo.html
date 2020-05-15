@@ -35,6 +35,12 @@
 				        <col width="1200px"/>
 				        <col width="900px"/>
 				    </colgroup>
+				    <tr>
+				    	<th>사진</th>
+				    	<td>
+				    		<img th:src="${'/upload/'+member.memberPic}">
+				    	</td>
+				    </tr>
 					<tr>
 						<th>아이디</th>
 						<td th:text="${member.memberId}"></td>
