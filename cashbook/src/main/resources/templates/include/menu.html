@@ -1,30 +1,58 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<style th:fragment="side">
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #0275d8;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6px 6px 6px 32px;
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: grey;
+}
+
+.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
 </head>
 <body>
 	<!-- /include/menu::sidemenu -->
 	<div th:fragment="sidemenu">
-		<div><span th:text="${session.loginMember.memberId}"></span> 님</div>
-		<nav class="navbar bg-primary navbar-nav">
-			<ul class ="flex-column">
-				<li class="nav-item">
-					<a class="nav-link" th:href="@{/home}" style="color : black">HOME</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" th:href="@{/memberInfo}" style="color : black">회원정보</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" th:href="@{/cashbookList}" style="color : black">가계부관리</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" th:href="@{/boardList}" style="color : black">게시판</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" th:href="@{/logout}" style="color : black">로그아웃</a>
-				</li>
-			</ul>
-		</nav>
+		<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span th:text="${session.loginMember.memberId}"></span> 님</div><br>
+					<a class="nav-link" th:href="@{/home}">HOME</a>
+	
+					<a class="nav-link" th:href="@{/memberInfo}">회원정보</a>
+				
+					<a class="nav-link" th:href="@{/cashbookList}">가계부관리</a>
+				
+					<a class="nav-link" th:href="@{/boardList}">게시판</a>
+					<br>
+					<a class="nav-link" th:href="@{/logout}">로그아웃</a>
 	</div>
 	
 	<!-- fragment -->

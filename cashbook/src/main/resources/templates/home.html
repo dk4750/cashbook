@@ -11,13 +11,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<style>
-	#sidemenu {
-		float: left;
-	}
-</style>
+<style th:include="/include/menu::side"></style>
 </head>
 <body>
-	<div id="sidemenu" th:include="/include/menu::sidemenu"></div>
+	<div id="sidemenu" th:include="/include/menu::sidemenu" class="sidenav"></div>
 </body>
 </html>

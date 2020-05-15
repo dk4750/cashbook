@@ -11,24 +11,30 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style th:include="/include/menu::side">
+</style>
 <style>
 	#sidemenu {
         float: left;
 	}
-	p {
+	#ww {
 		text-align: right;
 	}
+	.centered
+	{
+    	text-align:center;
+	}
 </style>
-</head>
+</head>	
 <body>
-	<div id="sidemenu" th:include="/include/menu::sidemenu"></div>
+	<div id="sidemenu" th:include="/include/menu::sidemenu" class="sidenav"></div>
 	
 	<div class = "container">
 		<div class="row">
 			<div class="col-3"></div>
 			<div class="col-6">
-				<h1 style="margin: 45px; text-align:center">회원정보</h1>
-					<p><a th:href="@{/modifyMember(memberId=${member.memberId})}" class="btn btn-primary">정보수정</a></p>
+				<h1 style="margin: 80px; text-align:center">회원정보</h1>
+					<p id="ww"><a th:href="@{/modifyMember(memberId=${member.memberId})}" class="btn btn-primary">정보수정</a></p>
 				<table class="table table table-hover">
 					<colgroup>
 				        <col width="300px"/>
@@ -37,8 +43,8 @@
 				    </colgroup>
 				    <tr>
 				    	<th>사진</th>
-				    	<td>
-				    		<img th:src="${'/upload/'+member.memberPic}">
+				    	<td class="centered">
+				    		<img th:src="${'/upload/'+member.memberPic}" style="width:200px;" class="rounded-circle" alt="Cinque Terre">
 				    	</td>
 				    </tr>
 					<tr>
@@ -63,7 +69,7 @@
 					</tr>
 				</table>
 				<br>
-				<p><a th:href="@{/removeMember(memberId=${member.memberId})}" class="btn btn-danger">회원탈퇴</a></p>
+				<p id="ww"><a th:href="@{/removeMember(memberId=${member.memberId})}" class="btn btn-danger">회원탈퇴</a></p>
 			</div>
 			<div class="col-3"></div>
 		</div>
