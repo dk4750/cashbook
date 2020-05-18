@@ -115,10 +115,10 @@ public class MemberController {
 	
 	// 멤버 수정 포스트
 	@PostMapping("/modifyMember")
-	public String modifyMember(Member member) {
-		System.out.println("member : " + member);
+	public String modifyMember(MemberForm memberForm) {
+		System.out.println("memberForm : " + memberForm);
 		
-		memberService.modifyMember(member);
+		memberService.modifyMember(memberForm);
 		
 		return "redirect:/memberInfo";
 	}
@@ -170,10 +170,15 @@ public class MemberController {
 	
 	// 포스트방식. 오버로딩(매개변수) 인서트 액션
 	@PostMapping("/addMember")
-	public String addMember(MemberForm memberForm) {	// 커맨드객체 폼에서 입력되는값을 하나의 데이터타입으로 받기위한 객체.. 도메인객체
+	public String addMember(MemberForm memberForm, Model model) {	// 커맨드객체 폼에서 입력되는값을 하나의 데이터타입으로 받기위한 객체.. 도메인객체
 		// System.out.println(member);	// 디버깅  .. toString() 메소드떄문에 member만 입력해도 다 출력된다.
-		memberService.addMember(memberForm);
+		
 		System.out.println(memberForm + " <-- memberForm");
+		boolean flag = memberService.addMember(memberForm);
+		if(flag == false) {
+			model.addAttribute("msg3", "이미지 파일만 업로드 하실 수 있습니다.");
+			return "/addMember";
+		}
 		return "redirect:/index";
 	}
 	

@@ -6,6 +6,13 @@
 <mapper namespace="com.gdu.cashbook.mapper.MemberMapper">
 	<!-- id는 매퍼의 메소드이름과 동일하게.	파라미터타입은 항상 리스트. 클래스데이터타입의 위치와 이름을 작성 -->
 	
+	<!-- 멤버 탈퇴시 사진 이름 가져오기 -->
+	<select id="selectMemberPic" parameterType="String" resultType="String">
+		SELECT member_pic
+		FROM member
+		WHERE member_id = #{memberId}
+	</select>
+	
 	<!-- 아이디와 이멜일을 입력해서 리턴값이 있는지 없는지를 알아내는 메소드  -->
 	<!-- 
 		1. 사용자가 입력한 아이디와 이메일을 확인해서 값이 있는지 확인되면 pw변경	// update
@@ -52,7 +59,8 @@
 			member_name = #{memberName},
 			member_phone = #{memberPhone},
 			member_addr = #{memberAddr},
-			member_mail = #{memberMail}
+			member_mail = #{memberMail},
+			member_pic = #{memberPic}
 		WHERE
 			member_id = #{memberId}
 			
@@ -66,7 +74,8 @@
 			member_name as memberName,
 			member_phone as memberPhone,
 			member_addr as memberAddr,
-			member_mail as memberMail
+			member_mail as memberMail,
+			member_pic as memberPic
 		FROM member
 		WHERE member_id = #{memberId}
 	</select>

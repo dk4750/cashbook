@@ -26,7 +26,10 @@
 	$(document).ready(function(){
 		$('#btn').click(function(){
 			helperInit();
-			if($('#memberPw').val().length < 4) {
+			if($('#memberId').val().length < 4) {
+				$('#idHelper').text("아이디를 4글자 이상 입력해주세요.");
+				$('#memberIdCheck').focus();
+			} else if($('#memberPw').val().length < 4) {
 				$('#pwHelper').text("비밀번호를 4글자 이상 입력해주세요.");
 				$('#memberPw').focus();
 			} else if($('#memberPw').val() != $('#memberPw2').val()) {
@@ -121,6 +124,7 @@
 					<div>
 						사진
 						<input type="file" name="memberPic" id="memberPic" class="form-control-file border">
+						<span th:text="${msg3}" style="color:red;"></span>
 					</div><br>
 					<div>
 						주소<br>

@@ -13,6 +13,9 @@ public interface MemberMapper {
 	// 아이디와 이멜일을 입력해서 리턴값이 있는지 없는지를 알아내는 메소드
 	public int updateMemberPw(Member member); 
 	
+	// 멤버 pic을 리턴..
+	public String selectMemberPic(String memberId);
+	
 	// 이름, 이메일, 전화번호를 입력받아 아이디값을 리턴하는 아이디검색메소드
 	public String selectMemberIdByMember(Member member);
 	
