@@ -42,33 +42,32 @@
 				        <col width="900px"/>
 				    </colgroup>
 				    <tr>
-				    	<th>사진</th>
+				    	<th bgcolor="#EAEAEA">사진</th>
 				    	<td class="centered">
 				    		<img th:src="${'/upload/'+member.memberPic}" style="width:200px;" class="rounded-circle" alt="Cinque Terre">
 				    	</td>
 				    </tr>
 					<tr>
-						<th>아이디</th>
+						<th bgcolor="#EAEAEA">아이디</th>
 						<td th:text="${member.memberId}"></td>
 					</tr>
 					<tr>
-						<th>이름</th>
+						<th bgcolor="#EAEAEA">이름</th>
 						<td th:text="${member.memberName}"></td>
 					</tr>
 					<tr>
-						<th>전화번호</th>
+						<th bgcolor="#EAEAEA">전화번호</th>
 						<td th:text="${member.memberPhone}"></td>
 					</tr>
 					<tr>
-						<th>주소</th>
+						<th bgcolor="#EAEAEA">주소</th>
 						<td th:text="${member.memberAddr}"></td>
 					</tr>
 					<tr>
-						<th>이메일</th>
+						<th bgcolor="#EAEAEA">이메일</th>
 						<td th:text="${member.memberMail}"></td>
 					</tr>
 				</table>
-				<br>
 				<p id="ww"><a th:href="@{/removeMember(memberId=${member.memberId})}" class="btn btn-danger">회원탈퇴</a></p>
 			</div>
 			<div class="col-3"></div>

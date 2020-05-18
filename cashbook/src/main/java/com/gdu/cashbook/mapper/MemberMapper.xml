@@ -112,14 +112,16 @@
 			member_name,
 			member_phone,
 			member_addr,
-			member_mail
+			member_mail,
+			member_pic
 		) VALUES (
 			#{memberId},
 			PASSWORD(#{memberPw}),
 			#{memberName},
 			#{memberPhone},
 			#{memberAddr},
-			#{memberMail}
+			#{memberMail},
+			#{memberPic}
 		)
 	</insert>
 	

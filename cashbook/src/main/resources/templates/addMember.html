@@ -83,7 +83,8 @@
 				<h1 style="margin: 20px; text-align:center">회원가입</h1>
 				
 				<!-- 중복확인 폼 -->
-				<form id="idForm" method="post" action="/checkMemberId">
+				<!-- 글자 형태로 전송하는 enctype.. -->
+				<form id="idForm" method="post" action="/checkMemberId" enctype="application/x-www-form-urlencoded">
 					아이디 중복확인<br>
 					<div class="input-group mb-3">
   						<input type="text" name="memberIdCheck" id="memberIdCheck" placeholder="아이디를 입력하세요." class="form-control">
@@ -96,7 +97,9 @@
 				</form>
 				
 				<!-- 회원가입 폼 -->
-				<form id = "myForm" method = "post" action="/addMember">
+				<!-- 바이트 형태로 전송하는 enctype.. -->
+				<form id = "myForm" method = "post" action="/addMember" enctype="multipart/form-data">
+					
 					<div>
 						아이디<br>
 						<input type="text" name="memberId" id="memberId" class="form-control" readonly="readonly" th:value="${memberIdCheck}">
@@ -114,6 +117,10 @@
 						회원 이름<br>
 						<input type="text" name="memberName" id="memberName" class="form-control" placeholder="회원님의 이름을 입력하세요.">
 						<span id="nameHelper" style="color:red;"></span>
+					</div><br>
+					<div>
+						사진
+						<input type="file" name="memberPic" id="memberPic" class="form-control-file border">
 					</div><br>
 					<div>
 						주소<br>
