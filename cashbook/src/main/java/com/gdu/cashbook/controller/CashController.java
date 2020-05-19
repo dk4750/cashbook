@@ -1,16 +1,22 @@
 package com.gdu.cashbook.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gdu.cashbook.service.CashService;
 import com.gdu.cashbook.vo.Cash;
@@ -20,9 +26,60 @@ import com.gdu.cashbook.vo.LoginMember;
 public class CashController {
 	@Autowired private CashService cashService;
 	
+	// cash 수정하는 겟매핑
+	@GetMapping("/modifyCash")
+	public String modifyCash(HttpSession session, @RequestParam("cashNo") int cashNo, Model model) {
+		System.out.println(cashNo);
+		
+		Cash cash = cashService.getCashOne(cashNo);
+		System.out.println("cash ==> " + cash);
+		model.addAttribute("cash", cash);
+		
+		/*	ㅡㅡ 실수
+		 * System.out.println(date); // 디버깅
+		 * 
+		 * // cash에 넣기위헤 LocalDate 타입으로 변환 DateTimeFormatter formatter =
+		 * DateTimeFormatter.ofPattern("yyyy-MM-dd"); LocalDate cashDate =
+		 * LocalDate.parse(date, formatter);
+		 * System.out.println(cashDate.format(formatter));
+		 * 
+		 * // 세션에서 아이디 가져오기 LoginMember loginMember =
+		 * (LoginMember)session.getAttribute("loginMember"); String memberId =
+		 * loginMember.getMemberId(); System.out.println(memberId); // 디버깅
+		 * 
+		 * // 임시 cash 생성 Cash cash = new Cash(); cash.setCashDate(cashDate);
+		 * cash.setMemberId(memberId);
+		 * 
+		 * Map<String, Object> map = cashService.getCashListByDate(cash);
+		 * model.addAttribute("cashList", map.get("cashList"));
+		 */
+		return "modifyCash";
+	}
+	
+	// cashNo를 받아서 해당 컬럼 삭제.. cash삭제 
+	@GetMapping("/removeCash")
+	public String removeCash(HttpSession session, @RequestParam("cashNo") int cashNo) {
+		// 로그인 안되어있을 시 인덱스로 리턴
+		if(session.getAttribute("loginMember") == null) {
+			return "redirect:/index";
+		}
+		// get으로 받은 cashNo 디버깅, 삭제
+		System.out.println(cashNo + " <== cashNo");
+		cashService.removeCash(cashNo);
+		
+		// 다시 리스트로 리다이렉트
+		return "redirect:/getCashListByDate";
+	}
+	
 	// 해당 회원의 날짜별 수입 지출 리스트 출력하는 폼 요청
 	@GetMapping("/getCashListByDate")
-	public String getCashListByDate(HttpSession session, Model model) {
+	public String getCashListByDate(HttpSession session, Model model, @RequestParam(value="day", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
+		// day값을 넘겨받는데 넘겨받지 않을경우 now로 설정.
+		if(day == null) {
+			day = LocalDate.now();
+		}
+		
+		System.out.println(day + " <== day");
 		// 세션 검사.. 로그인중이 아니라면 인덱스로 리턴
 		if(session.getAttribute("loginMember") == null) {
 			return "redirect:/index";
@@ -34,30 +91,34 @@ public class CashController {
 		String loginMemberId = loginMember.getMemberId();
 		System.out.println(loginMemberId + " <== loginMemberId");	// 디버깅
 		
+		/*
 		// 날짜 .. subString 등 등 해야함
-		Date today = new Date();
-		System.out.println(today + " <== today");	// 디버깅
+		Date day = new Date();
+		System.out.println(day + " <== today");	// 디버깅
 		
 		// 오늘은 SimpleDateFormat을 사용
 		// 원하는 날짜 형식을 정한 후 그 변수에 format(오늘 날짜)를 넣는다.
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String strToday = sdf.format(today);
+		String strToday = sdf.format(day);
 		System.out.println(strToday + " <== strToday");
+		*/
 		
 		//일회용  Cash 클래스 데이터타입
 		Cash cash = new Cash();	// 세션안의 ID와 날짜타입 yyyy-MM-dd 입력
 		cash.setMemberId(loginMemberId);
-		cash.setCashDate(strToday);
+		cash.setCashDate(day);
 		
 		// 결과값 받은것을 모델에 담아서 페이지에 보내준다
-		List<Cash> cashList = cashService.getCashListByDate(cash);
-		System.out.println(cashList + " <== cashList");
-		model.addAttribute("cashList", cashList);
-		model.addAttribute("strToday", strToday);
+		Map<String, Object> map = cashService.getCashListByDate(cash);
+		model.addAttribute("cashList", map.get("cashList"));
+		model.addAttribute("cashKindSum", map.get("cashKindSum"));
+		model.addAttribute("day", day);
 		
+		/*	List 디버깅
 		for(Cash c : cashList) {
 			System.out.println(c);
 		}
+		*/
 		
 		// 페이지 요청
 		return "getCashListByDate";

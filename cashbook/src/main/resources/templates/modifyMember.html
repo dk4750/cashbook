@@ -60,56 +60,52 @@
 			<div class="col-6">
 				<h1 style="margin: 80px; text-align:center">회원정보 수정</h1>
 				<form method="post" action="/modifyMember" id="form" enctype="multipart/form-data">
-					<table class="table table table-hover">
+					<table class="table table table-hover table-bordered" style="text-align:center;">
 						<tr>
-							<td>사진</td>
+							<td style="background-color:#EAEAEA">사진</td>
 							<td class="centered">
 				    			<img th:src="${'/upload/'+member.memberPic}" style="width:200px;" class="rounded-circle" alt="Cinque Terre"><br><br>
 				    			<input type="file" name="memberPic" id="memberPic" class="form-control-file border">
 				    		</td>
 						</tr>
 						<tr>
-							<td>아이디</td>
+							<td style="background-color:#EAEAEA">아이디</td>
 							<td>
 								<input type="text" name="memberId" id="memberId" th:value="${member.memberId}" class="form-control" readonly="readonly">
 							</td>
 						</tr>
 						<tr>
-							<td>비밀번호</td>
+							<td style="background-color:#EAEAEA">비밀번호</td>
 							<td>
 								<input type="password" name="memberPw" id="memberPw" th:value="${member.memberPw}" class="form-control">
 							</td>
 						</tr>
 						<tr>
-							<td>이름</td>
+							<td style="background-color:#EAEAEA">이름</td>
 							<td>
 								<input type="text" name="memberName" id="memberName" th:value="${member.memberName}" class="form-control">
 							</td>
 						</tr>
 						<tr>
-							<td>전화번호</td>
+							<td style="background-color:#EAEAEA">전화번호</td>
 							<td>
 								<input type="text" name="memberPhone" id="memberPhone" th:value="${member.memberPhone}" class="form-control">
 							</td>
 						</tr>
 						<tr>
-							<td>주소</td>
+							<td style="background-color:#EAEAEA">주소</td>
 							<td>
 								<input type="text" name="memberAddr" id="memberAddr" th:value="${member.memberAddr}" class="form-control">
 							</td>
 						</tr>
 						<tr>
-							<td>이메일</td>
+							<td style="background-color:#EAEAEA">이메일</td>
 							<td>
 								<input type="text" name="memberMail" id="memberMail" th:value="${member.memberMail}" class="form-control">
 							</td>
 						</tr>
-						<tr>
-							<td colspan="2">
-								<button type = "button" id="btn" class="btn btn-primary btn-block">수정</button>
-							</td>
-						</tr>
 					</table>
+					<button type = "button" id="btn" class="btn btn-primary btn-block">수정</button><br><br>
 					<span id="idHelper"></span>
 					<span id="nameHelper"></span>
 					<span id="addrHelper"></span>

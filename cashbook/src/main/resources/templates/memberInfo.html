@@ -24,6 +24,10 @@
 	{
     	text-align:center;
 	}
+	
+	th{
+		background-color:#EAEAEA;
+	}
 </style>
 </head>	
 <body>
@@ -35,36 +39,36 @@
 			<div class="col-6">
 				<h1 style="margin: 80px; text-align:center">회원정보</h1>
 					<p id="ww"><a th:href="@{/modifyMember(memberId=${member.memberId})}" class="btn btn-primary">정보수정</a></p>
-				<table class="table table table-hover">
+				<table class="table table table-hover table-bordered" style="text-align:center;">
 					<colgroup>
 				        <col width="300px"/>
 				        <col width="1200px"/>
 				        <col width="900px"/>
 				    </colgroup>
 				    <tr>
-				    	<th bgcolor="#EAEAEA">사진</th>
+				    	<th>사진</th>
 				    	<td class="centered">
 				    		<img th:src="${'/upload/'+member.memberPic}" style="width:200px;" class="rounded-circle" alt="Cinque Terre">
 				    	</td>
 				    </tr>
 					<tr>
-						<th bgcolor="#EAEAEA">아이디</th>
+						<th>아이디</th>
 						<td th:text="${member.memberId}"></td>
 					</tr>
 					<tr>
-						<th bgcolor="#EAEAEA">이름</th>
+						<th>이름</th>
 						<td th:text="${member.memberName}"></td>
 					</tr>
 					<tr>
-						<th bgcolor="#EAEAEA">전화번호</th>
+						<th>전화번호</th>
 						<td th:text="${member.memberPhone}"></td>
 					</tr>
 					<tr>
-						<th bgcolor="#EAEAEA">주소</th>
+						<th>주소</th>
 						<td th:text="${member.memberAddr}"></td>
 					</tr>
 					<tr>
-						<th bgcolor="#EAEAEA">이메일</th>
+						<th>이메일</th>
 						<td th:text="${member.memberMail}"></td>
 					</tr>
 				</table>

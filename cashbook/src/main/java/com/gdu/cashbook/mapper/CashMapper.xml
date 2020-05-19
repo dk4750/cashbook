@@ -4,8 +4,39 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 네임스페이스는 매퍼의 위치와 매퍼의 이름 -->
 <mapper namespace="com.gdu.cashbook.mapper.CashMapper">
+	<!-- cashNo 에 따라 해당 cash내역 가져오는 쿼리 -->
+	<select id="selectCashOne" parameterType="int" resultType="com.gdu.cashbook.vo.Cash">
+		SELECT
+			cash_kind as cashKind,
+			category_name as categoryName,
+			cash_price as cashPrice,
+			cash_place as cashPlace,
+			cash_memo as cashMemo
+		FROM cash
+		WHERE cash_no = #{cashNo}
+	</select>
+
+	<!-- price의 합계 구하는 쿼리 -->
+	<select id="selectCashKindSum" parameterType="com.gdu.cashbook.vo.Cash" resultType="int">
+		SELECT
+      		IFNULL
+				(IFNULL((SELECT SUM(cash_price) 
+				FROM cash 
+				WHERE cash_date = #{cashDate} 
+				AND cash_kind = '수입' 
+				AND member_id = #{memberId}), 0)
+      		-
+      		IFNULL((SELECT SUM(cash_price) 
+      		FROM cash WHERE cash_date = #{cashDate} 
+      		AND cash_kind = '지출' 
+      		AND member_id = #{memberId}), 0), 0)
+		FROM dual
+	</select>
+
+	<!-- 해당 이용자의 특정날의 리스트 출력하는 쿼리.. 날짜와 아이디를 입력받아 리스트를 리턴 -->
 	<select id="selectCashListByDate" parameterType="com.gdu.cashbook.vo.Cash" resultType="com.gdu.cashbook.vo.Cash">
 		SELECT
+			cash_no as cashNo,
 			cash_kind as cashKind,
 			category_name as categoryName,
 			cash_price as cashPrice,
@@ -16,4 +47,11 @@
 		AND cash_date = #{cashDate}
 		ORDER BY cash_no ASC
 	</select>
+	
+	<!-- cashNo를 받아서 해당 컬럼 삭제하는쿼리 -->
+	<delete id="removeCash" parameterType="int">
+		DELETE
+		FROM cash
+		WHERE cash_no = #{cashNo}
+	</delete>
 </mapper>
