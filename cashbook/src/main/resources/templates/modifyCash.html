@@ -19,18 +19,19 @@
 		<br><br>
 		<h1 style="text-align:left; font-weight:bold;">2020년 가계부</h1>
 		<h3 style="margin: 80px; text-align:center">수입/지출 수정</h3>
-		<div th:text="${cash.cashPrice}"></div>
-		<table>
-			<tr>
-				<td>카테고리</td>
-				<td>
-					<select>
-						
-					</select>
-				</td>
-			</tr>
-		</table>
+		<form method="post" th:action="@{/modifyCash}" id="form">
+			<table border="1">
+				<tr>
+					<td>카테고리</td>
+					<td>
+						<select id="categoryName" name="categoryName" th:field="${cash.categoryName}">
+							<option value="">카테고리 선택</option>
+							<option th:each="${cash.categoryName}" th:value="${cash.categoryName}" th:text="${cash.categoryName}"></option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</form>
 	</div>
-	
 </body>
 </html>
