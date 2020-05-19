@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Cash List</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style th:include="/include/menu::side"></style>
+<style>
+	table{
+		margin-left:auto;
+		margin-right:auto;
+	}
+	
+	td,th{
+		align:center;
+		valign:middle;
+	}
+</style>
+</head>
+<body>
+	<div id="sidemenu" th:include="/include/menu::sidemenu" class="sidenav"></div>
+	<div class="container">
+		<br><br>
+		<h1 style="text-align:left">2020년 가계부</h1>
+		<h3 style="margin: 80px; text-align:center" th:text="${strToday}"></h3>
+		<div>
+			<a id="a" href="" style="float: left;" class="btn btn-secondary">이전</a>
+			<a id="b" href="" style="float: right;" class="btn btn-secondary">다음</a>
+		</div><br><br>
+		<table class="table table table-hover" style="width:1100px; margin:auto; text-align:center;">
+			<thead>
+				<tr>
+					<th bgcolor="#EAEAEA">카테고리</th>
+					<th bgcolor="#EAEAEA">수입</th>
+					<th bgcolor="#EAEAEA">지출</th>
+					<th bgcolor="#EAEAEA">장소</th>
+					<th bgcolor="#EAEAEA">메모</th>
+					<th bgcolor="#EAEAEA">수정</th>
+					<th bgcolor="#EAEAEA">삭제</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="c : ${cashList}">
+					<td th:text="${c.categoryName}"></td>
+					<th:block th:if="${c.cashKind} == '수입'">
+						<td th:text="${'+ ' + c.cashPrice + ' 원'}">
+						<td></td>
+					</th:block>
+					<th:block th:if="${c.cashKind} == '지출'">
+						<td></td>
+						<td th:text="${'- ' + c.cashPrice + ' 원'}"></td>
+					</th:block>
+					<td th:text="${c.cashPlace}"></td>
+					<td th:text="${c.cashMemo}"></td>
+					<td><a href="">수정</a></td>
+					<td><a href="">삭제</a></td>
+				</tr>
+			</tbody>
+		</table><br><br>
+		<a class="btn btn-primary btn-lg" href="">입력</a>
+		<div>
+			<h1 style="text-align:right">합계</h1>
+		</div>
+	</div>
+</body>
+</html>
