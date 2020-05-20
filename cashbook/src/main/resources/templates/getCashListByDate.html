@@ -28,7 +28,7 @@
 	<div id="sidemenu" th:include="/include/menu::sidemenu" class="sidenav"></div>
 	<div class="container">
 		<br><br>
-		<h1 style="text-align:left; font-weight:bold;">2020년 가계부</h1>
+		<h1 style="text-align:left; font-weight:bold;" th:text="${day.getYear()}+'년 가계부'"></h1>
 		<h3 style="margin: 80px; text-align:center" th:text="${day}"></h3>
 		<div>
 			<a id="a" th:href="@{/getCashListByDate(day=${day.plusDays(-1)})}" style="float: left;" class="btn btn-secondary">이전</a>

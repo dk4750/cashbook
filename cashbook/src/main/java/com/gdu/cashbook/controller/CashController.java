@@ -26,6 +26,44 @@ import com.gdu.cashbook.vo.LoginMember;
 public class CashController {
 	@Autowired private CashService cashService;
 	
+	// 월별 달력출력하기. 캘린더타입이 필요하다.. 복잡한 날짜 계산은 캘린더가 좋다
+	@GetMapping("/getCashListByMonth")
+	public String getCashListByMonth(HttpSession session, Model model, @RequestParam(value="day", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
+		// 세션검사. 로그인되어있지 않다면 인덱스로 리다이렉트
+		if(session.getAttribute("loginMember") == null) {
+			return "redirect:/index";
+		}
+		
+		// 입력된 값이 없을시 로컬시간으로 설정.
+		Calendar calendarDay = Calendar.getInstance();
+		if(day == null) {
+			day = LocalDate.now();
+		} else {
+			// local -> calendar
+			calendarDay.set(day.getYear(), day.getMonthValue()-1, day.getDayOfMonth());	// 오늘날짜에서 day날으로
+		}
+		// 날짜 디버깅
+		System.out.println(day.getYear());
+		System.out.println(day.getMonthValue()-1);
+		System.out.println(day.getDayOfMonth());
+		
+		// 모델에 담아서 필요한 날짜를 보내주기
+		model.addAttribute("day", day);
+		model.addAttribute("year", calendarDay.get(Calendar.YEAR));
+		model.addAttribute("month", calendarDay.get(Calendar.MONTH)+1);
+		model.addAttribute("lastDay", calendarDay.getActualMaximum(Calendar.DATE));
+		
+		// 요일 구하는 메소드
+		Calendar firstDay = calendarDay;
+		firstDay.set(Calendar.DATE, 1); // 일을 1로 변경
+		// firstDay.get(Calendar.DAY_OF_WEEK);	// 0:일 , 1:월, 2:화
+		System.out.println(firstDay.get(Calendar.DAY_OF_WEEK) + " <== firstDay");
+		model.addAttribute("firstDayOfWeek", firstDay.get(Calendar.DAY_OF_WEEK));
+		
+		// 페이지 요청하가ㅣ
+		return "getCashListByMonth";
+	}
+	
 	// cash 수정하는 겟매핑
 	@GetMapping("/modifyCash")
 	public String modifyCash(HttpSession session, @RequestParam("cashNo") int cashNo, Model model) {
@@ -113,6 +151,7 @@ public class CashController {
 		model.addAttribute("cashList", map.get("cashList"));
 		model.addAttribute("cashKindSum", map.get("cashKindSum"));
 		model.addAttribute("day", day);
+		System.out.println(day.getYear());
 		
 		/*	List 디버깅
 		for(Cash c : cashList) {
