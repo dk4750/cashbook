@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 네임스페이스는 매퍼의 위치와 매퍼의 이름 -->
+<mapper namespace="com.gdu.cashbook.mapper.CategoryMapper">
+	<!-- 카테고리 이름 가져오는 쿼리 -->
+	<select id="selectCategoryName" resultType="com.gdu.cashbook.vo.Category">
+		SELECT category_name as categoryName
+		FROM category
+	</select>
+</mapper>

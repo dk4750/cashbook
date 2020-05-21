@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Modify Cash</title>
+<title>Add Cash</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -41,17 +41,17 @@
 		<!-- 큰제목 -->
 		<h1 style="text-align:left; font-weight:bold;" th:text="${year}+'년 가계부'"></h1>
 		<!-- 부제목 -->
-		<h2 style="margin: 80px; text-align:center; font-weight:bold;">수입/지출 수정</h2>
+		<h2 style="margin: 80px; text-align:center; font-weight:bold;">수입/지출 입력</h2>
 		
 		<!-- 테이블 -->
-		<form method="post" th:action="@{/modifyCash}" id="form">
+		<form method="post" th:action="@{/addCash}" id="form">
 			<table class="table table table-hover table-bordered" style="width:600px; height:300px; margin:auto; text-align:center;">
 				<tr>
 					<td bgcolor="#EAEAEA" width="300px" style="font-weight:bold;">카테고리</td>
 					<td>
 						<select id="categoryName" name="categoryName" class="form-control">
-							<option th:value="${cash.categoryName}" style="color:grey;" th:text="${cash.categoryName}">카테고리를 선택하세요.</option>
-							<option th:each="list : ${list}" th:value="${list.categoryName}" th:text="${list.categoryName}"></option>			
+							<option value="" style="color:grey;">카테고리를 선택하세요.</option>
+							<option th:each="list : ${categoryList}" th:value="${list.categoryName}" th:text="${list.categoryName}"></option>			
 						</select>
 					</td>
 				</tr>
@@ -59,7 +59,7 @@
 					<td bgcolor="#EAEAEA" style="font-weight:bold;">수입/지출</td>
 					<td>
 						<select id="cashKind" name="cashKind" class="form-control">
-							<option th:value="${cash.cashKind}" style="color:grey;" th:text="${cash.cashKind}">수입/지출 을 선택하세요.</option>
+							<option value="" style="color:grey;">수입/지출 을 선택하세요.</option>
 							<option value="수입">수입</option>
 							<option value="지출">지출</option>
 						</select>
@@ -68,23 +68,25 @@
 				<tr>
 					<td bgcolor="#EAEAEA" style="font-weight:bold;">금액</td>
 					<td>
-						<input type="text" name="cashPrice" id="cashPrice" class="form-control" th:value="${cash.cashPrice}">
+						<input type="text" name="cashPrice" id="cashPrice" class="form-control" placeHolder="금액을 입력하세요.">
 					</td>
 				</tr>
 				<tr>
 					<td bgcolor="#EAEAEA" style="font-weight:bold;">장소</td>
 					<td>
-						<input type="text" name="cashPlace" id="cashPlace" class="form-control" th:value="${cash.cashPlace}">
+						<input type="text" name="cashPlace" id="cashPlace" class="form-control" placeHolder="장소를 입력하세요.">
 					</td>
 				</tr>
 				<tr>
 					<td bgcolor="#EAEAEA" style="font-weight:bold;">메모</td>
 					<td>
-						<input type="text" name="cashMemo" id="cashMemo" class="form-control" th:value="${cash.cashMemo}">
+						<input type="text" name="cashMemo" id="cashMemo" class="form-control" placeHolder="메모를 입력하세요. (생략가능)">
 					</td>
 				</tr>
 			</table><br><br>
-			<input type="hidden" name="cashNo" th:value="${cash.cashNo}">
+			<div>
+				<input type="hidden" name="day" th:value="${day}">
+			</div>
 			<div style="text-align: center;">
 				<button type="button" id="btn" class="btn btn-primary btn-lg" style="width:100px">입력</button>
 			</div>

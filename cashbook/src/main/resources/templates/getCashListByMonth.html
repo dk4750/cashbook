@@ -31,6 +31,18 @@
 		top:24%;
 		left:32%;
 	}
+	
+	.gd-blue{
+		color:blue;
+	}
+	
+	.gd-red{
+		color:red;
+	}
+	
+	#a{
+		color:black;
+	}
 </style>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -49,13 +61,30 @@
 		<h1 style="text-align:left; font-weight:bold;" th:text="${year}+'년 가계부'"></h1>
 		<h3 th:if="${month} < 10" style="margin: 80px; text-align:center" th:text="'0' + ${month} + '월'"></h3>
 		<h3 th:unless="${month} < 10" style="margin: 80px; text-align:center" th:text="${month} + '월'"></h3>
-		
-			<a id="a" th:href="@{/getCashListByMonth(day=${day.plusMonths(-1)})}" style="float: left;" class="btn btn-secondary">이전</a>
+		<div>
+			<a id="aa" th:href="@{/getCashListByMonth(day=${day.plusMonths(-1)})}" style="float: left;" class="btn btn-secondary">이전</a>
 			<a id="b" th:href="@{/getCashListByMonth(day=${day.plusMonths(1)})}" style="float: right;" class="btn btn-secondary">다음</a>
-		
+		</div>
 		<div class = "gd-center">
-		<div class="gd-left gd-title">일</div><div class="gd-left gd-title">월</div><div class="gd-left gd-title">화</div><div class="gd-left gd-title">수</div><div class="gd-left gd-title">목</div><div class="gd-left gd-title">금</div><div class="gd-left gd-title">토</div>
-		<div th:each="i,index : ${#numbers.sequence(1, lastDay+(firstDayOfWeek-1))}" th:text="${i-(firstDayOfWeek-1)} > 0 ? ${i-(firstDayOfWeek-1)} : '' " th:class="${index.index%7}==0 ? 'gd-clear gd-left' : 'gd-left'"></div>
+		<div class="gd-left gd-title">일</div>
+		<div class="gd-left gd-title">월</div>
+		<div class="gd-left gd-title">화</div>
+		<div class="gd-left gd-title">수</div>
+		<div class="gd-left gd-title">목</div>
+		<div class="gd-left gd-title">금</div>
+		<div class="gd-left gd-title">토</div>
+		<div th:each="i,index : ${#numbers.sequence(1, lastDay+(firstDayOfWeek-1))}" th:class="${index.index%7}==0 ? 'gd-clear gd-left' : 'gd-left'">
+			<th:block th:with="var = ${i-(firstDayOfWeek-1)} > 0 ? ${i-(firstDayOfWeek-1)} : ''">
+				<th:block th:with="var2 = ${year} + '-' + ${#numbers.formatInteger(month,2)} + '-' + ${#numbers.formatInteger(var,2)}">						
+					<a id="a" th:style="${index.index%7} == 0 ? 'color:red;' : 'color:black'" th:href="@{/getCashListByDate(day=${var2})}" th:text="${i-(firstDayOfWeek-1)} > 0 ? ${i-(firstDayOfWeek-1)} : '' "></a>
+				</th:block>
+			</th:block>
+			<div th:each="dp : ${dayAndPriceList}">
+				<span th:if="${i-(firstDayOfWeek-1)}==${dp.day}">
+					<span th:class="${dp.price} >=0 ? 'gd-blue' : 'gd-red'" th:text="${dp.price} >0 ? '+'+${dp.price} : ${dp.price}"></span>
+				</span>
+			</div>
+		</div>
 		</div>
 	</div>
 </body>

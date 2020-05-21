@@ -59,12 +59,12 @@
 					</th:block>
 					<td th:text="${c.cashPlace}"></td>
 					<td th:text="${c.cashMemo}"></td>
-					<td><a th:href="@{/modifyCash(cashNo=${c.cashNo}, cashDate=${day})}" style="color:black">수정</a></td>
+					<td><a th:href="@{/modifyCash(cashNo=${c.cashNo}, day=${day})}" style="color:black">수정</a></td>
 					<td><a th:href="@{/removeCash(cashNo=${c.cashNo})}" style="color:black">삭제</a></td>
 				</tr>
 			</tbody>
 		</table><br><br>
-		<a class="btn btn-primary btn-lg" th:href="@{/addCash}">입력</a>
+		<a class="btn btn-primary btn-lg" th:href="@{/addCash(day=${day}, memberId=${memberId})}">입력</a>
 		<div>
 			<h1 style="text-align:right">합계 
 			<span th:if="${cashKindSum} >= 0" th:text="'+' + ${cashKindSum}" style="color:blue"></span>

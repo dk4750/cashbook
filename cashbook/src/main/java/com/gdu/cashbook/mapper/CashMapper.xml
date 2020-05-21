@@ -4,6 +4,54 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 네임스페이스는 매퍼의 위치와 매퍼의 이름 -->
 <mapper namespace="com.gdu.cashbook.mapper.CashMapper">
+	<!-- Cash 내역 업데이트하기 -->
+	<update id="modifyCash" parameterType="com.gdu.cashbook.vo.Cash">
+		UPDATE cash
+		SET cash_kind = #{cashKind},
+			category_name = #{categoryName},
+			cash_price = #{cashPrice},
+			cash_place = #{cashPlace},
+			cash_memo = #{cashMemo}
+		WHERE cash_no = #{cashNo}
+	</update>
+	
+	<!-- Cash 내역 인서트하기 -->
+	<insert id="addCash" parameterType="com.gdu.cashbook.vo.Cash">
+		INSERT INTO cash
+				(member_id, 
+				cash_date, 
+				cash_kind, 
+				category_name, 
+				cash_price, 
+				cash_place, 
+				cash_memo)
+		VALUES	(#{memberId}, 
+				#{cashDate}, 
+				#{cashKind}, 
+				#{categoryName}, 
+				#{cashPrice}, 
+				#{cashPlace}, 
+				#{cashMemo})
+	</insert>
+
+	<!-- memberId를 받아 해당 멤버의 cash를 모두 삭제하는 쿼리.. 멤버삭제 트랜잭션때문에 필요 -->
+	<delete id="removeCashByMember" parameterType="String">
+		DELETE
+		FROM cash
+		WHERE member_id = #{memberId}
+	</delete>
+	<!-- 날짜를 입력받아서 일짜별 수입,지출의 합을 출력하는 쿼리 -->
+	<select id="selectDayAndPriceList" parameterType="Map" resultType="com.gdu.cashbook.vo.DayAndPrice">
+		SELECT	DAY(cash_date) as day,
+		SUM(CASE WHEN cash_kind='수입' THEN cash_price
+			WHEN cash_kind='지출' THEN -cash_price END) as price
+		FROM cash
+		WHERE YEAR(cash_date) = #{year}
+		AND MONTH(cash_date) = #{month}
+		AND member_id = #{memberId}
+		GROUP BY DAY(cash_date)
+	</select>
+
 	<!-- cashNo 에 따라 해당 cash내역 가져오는 쿼리 -->
 	<select id="selectCashOne" parameterType="int" resultType="com.gdu.cashbook.vo.Cash">
 		SELECT

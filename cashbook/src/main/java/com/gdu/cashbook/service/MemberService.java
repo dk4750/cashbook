@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.gdu.cashbook.mapper.CashMapper;
 import com.gdu.cashbook.mapper.MemberMapper;
 import com.gdu.cashbook.mapper.MemberidMapper;
 import com.gdu.cashbook.vo.LoginMember;
@@ -28,6 +29,10 @@ public class MemberService {
 	private MemberidMapper memberidMapper;
 	@Autowired
 	private JavaMailSender javaMailSender; // @Component가 없어서 오토와이어드 불가능..
+	@Autowired
+	private CashMapper cashMapper;
+	
+	
 	@Value("C:\\Users\\GD7\\Documents\\git-cashbook\\cashbook\\src\\main\\resources\\static\\upload\\")
 	private String path;
 	
@@ -77,9 +82,10 @@ public class MemberService {
 		}
 		
 		// 2.. 삭제 결과값이 1일시 인서트..
-		if(memberMapper.removeMember(loginMember) == 1) {
+		if(cashMapper.removeCashByMember(memberId) != 0 && memberMapper.removeMember(loginMember) == 1) {
 			return memberidMapper.insertMemberId(memberId);
 		}
+			
 		return 0;
 	}
 	
