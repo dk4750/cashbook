@@ -70,7 +70,7 @@ public class CashController {
 		cashService.addCash(cash);
 		
 		// 페이지요청
-		return "redirect:/getCashListByDate";
+		return "redirect:/getCashListByDate?day="+day;
 	}
 	
 	// 월별 달력출력하기. 캘린더타입이 필요하다.. 복잡한 날짜 계산은 캘린더가 좋다
@@ -129,10 +129,18 @@ public class CashController {
 	
 	// cash 수정 액션 .. POST Mapping
 	@PostMapping("/modifyCash")
-	public String modifyCash(HttpSession session, Cash cash) {
+	public String modifyCash(HttpSession session, Cash cash, @RequestParam(value="day", required = false) @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate day) {
+		// day 디버깅
+		System.out.println(day +" <== modify post day");
+		
 		// 세션검사
 		if(session.getAttribute("loginMember") == null) {
 			return "redirect:/index";
+		}
+		
+		// day가 값이 안들어 올 시 오늘날짜로
+		if(day == null) {
+			day = LocalDate.now();
 		}
 		
 		// 값 들어온거 디버깅
@@ -142,7 +150,7 @@ public class CashController {
 		cashService.modifyCash(cash);
 		
 		// 페이지요청
-		return "redirect:/getCashListByDate";
+		return "redirect:/getCashListByDate?day="+day;
 	}
 	
 	// cash 수정하는 겟매핑
@@ -155,6 +163,9 @@ public class CashController {
 		// 년도 받아서 넘겨주기
 		int year = day.getYear();
 		model.addAttribute("year", year);
+		
+		// 수정 완료 후 해당 일로 이동해야하기때문에 day를 모델에 담아서 페이지에서 post로 보내준다
+		model.addAttribute("day", day);
 		
 		// categoryName 리스트 받아오기
 		List<Category> categoryList = categoryService.getCategoryName();
@@ -173,17 +184,23 @@ public class CashController {
 	
 	// cashNo를 받아서 해당 컬럼 삭제.. cash삭제 
 	@GetMapping("/removeCash")
-	public String removeCash(HttpSession session, @RequestParam("cashNo") int cashNo) {
+	public String removeCash(HttpSession session, @RequestParam("cashNo") int cashNo, @RequestParam(value="day", required = false) @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate day) {
 		// 로그인 안되어있을 시 인덱스로 리턴
 		if(session.getAttribute("loginMember") == null) {
 			return "redirect:/index";
 		}
+		
+		// day값이 들어오지않았을 시 오늘 날짜로
+		if(day == null) {
+			day = LocalDate.now();
+		}
+		
 		// get으로 받은 cashNo 디버깅, 삭제
 		System.out.println(cashNo + " <== cashNo");
 		cashService.removeCash(cashNo);
 		
 		// 다시 리스트로 리다이렉트
-		return "redirect:/getCashListByDate";
+		return "redirect:/getCashListByDate?day="+day;
 	}
 	
 	// 해당 회원의 날짜별 수입 지출 리스트 출력하는 폼 요청

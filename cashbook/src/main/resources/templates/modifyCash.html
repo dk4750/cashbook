@@ -45,6 +45,7 @@
 		
 		<!-- 테이블 -->
 		<form method="post" th:action="@{/modifyCash}" id="form">
+			<input type="hidden" name="day" th:value="${day}">
 			<table class="table table table-hover table-bordered" style="width:600px; height:300px; margin:auto; text-align:center;">
 				<tr>
 					<td bgcolor="#EAEAEA" width="300px" style="font-weight:bold;">카테고리</td>
