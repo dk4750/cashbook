@@ -43,12 +43,14 @@ body {
 <body>
 	<!-- /include/menu::sidemenu -->
 	<div th:fragment="sidemenu">
-		<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span th:text="${session.loginMember.memberId}"></span> 님</div><br>
+		<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<span style="font-weight:bold;" th:text="${session.loginMember.memberId}"></span> 님
+	</div><br>
 					<a class="nav-link" th:href="@{/home}">HOME</a>
 	
 					<a class="nav-link" th:href="@{/memberInfo}">회원정보</a>
 				
-					<a class="nav-link" th:href="@{/getCashListByDate}">가계부관리</a>
+					<a class="nav-link" th:href="@{/getCashListByDate}">일간가계부</a>
 					
 					<a class="nav-link" th:href="@{/getCashListByMonth}">월간가계부</a>
 				

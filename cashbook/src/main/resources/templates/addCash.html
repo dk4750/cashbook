@@ -43,6 +43,11 @@
 		<!-- 부제목 -->
 		<h2 style="margin: 80px; text-align:center; font-weight:bold;">수입/지출 입력</h2>
 		
+		<!-- 카테고리 추가 링크 -->
+		<div style="text-align: center;">
+			<a th:href="@{/addCategory(day=${day})}" class="btn btn-primary">카테고리 추가</a>
+			<a th:href="@{/removeCategory(day=${day})}" class="btn btn-danger">카테고리 삭제</a>
+		</div><br>
 		<!-- 테이블 -->
 		<form method="post" th:action="@{/addCash}" id="form">
 			<table class="table table table-hover table-bordered" style="width:600px; height:300px; margin:auto; text-align:center;">

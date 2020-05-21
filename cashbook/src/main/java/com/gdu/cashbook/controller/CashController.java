@@ -40,8 +40,11 @@ public class CashController {
 			return "redirect:/index";
 		}
 		
+		// 카테고리이름 불러오는데에 쓰일 멤버아이디 출력하기
+		String memberId = ((LoginMember)(session.getAttribute("loginMember"))).getMemberId();
+		
 		// 카테테고리 이름들 리스트 불러와서 페이지로 보내주기
-		List<Category> categoryList = categoryService.getCategoryName();
+		List<Category> categoryList = categoryService.getCategoryName(memberId);
 		System.out.println(categoryList + " <==categoryList");
 		model.addAttribute("categoryList", categoryList);
 		
@@ -167,8 +170,12 @@ public class CashController {
 		// 수정 완료 후 해당 일로 이동해야하기때문에 day를 모델에 담아서 페이지에서 post로 보내준다
 		model.addAttribute("day", day);
 		
+		// categoryName에 세션아이디 넣어야하기때문에 세션아이디받아오기
+		String memberId = ((LoginMember)(session.getAttribute("loginMember"))).getMemberId();
+		System.out.println(memberId + " <== cashUpdateMemberId");
+		
 		// categoryName 리스트 받아오기
-		List<Category> categoryList = categoryService.getCategoryName();
+		List<Category> categoryList = categoryService.getCategoryName(memberId);
 		System.out.println(categoryList);
 		model.addAttribute("list", categoryList);
 		

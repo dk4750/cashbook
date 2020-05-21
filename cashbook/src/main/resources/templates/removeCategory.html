@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Remove Category</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#btn').click(function(){
+			$('#form').submit();
+		});
+	});
+</script>
+<style th:include="/include/menu::side"></style>
+<style>
+	#sidemenu {
+		float: left;
+	}
+	
+	p {
+		text-align: center;
+	}
+</style>
+</head>
+<body>
+	<div id="sidemenu" th:include="/include/menu::sidemenu" class="sidenav"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-3"></div>
+			<div class="col-6">
+				<h1 style="margin: 80px; text-align:center">카테고리 삭제</h1>
+				<form method="post" th:action="@{/removeCategory}" id="form">
+					<input type="hidden" name="day" th:value="${day}">
+					<div>
+						카테고리 삭제
+						<select id="categoryName" name="categoryName" class="form-control">
+							<option value="">--------------------삭제하실 카테고리를 선택해주세요--------------------</option>
+							<option th:each="list : ${list}" th:value="${list.categoryName}" th:text="${list.categoryName}"></option>
+						</select>
+					</div><br>
+					<div>
+						<p><button type="button" id="btn" class="btn btn-danger btn-block btn-lg">카테고리 삭제</button></p>
+					</div>
+				</form>
+			</div>
+			<div class="col-3"></div>
+		</div>
+	</div>
+</body>
+</html>

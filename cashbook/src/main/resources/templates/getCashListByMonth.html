@@ -80,7 +80,7 @@
 				</th:block>
 			</th:block>
 			<div th:each="dp : ${dayAndPriceList}">
-				<span th:if="${i-(firstDayOfWeek-1)}==${dp.day}">
+				<span th:if="${i-(firstDayOfWeek-1)}==${dp.day}"><br>
 					<span th:class="${dp.price} >=0 ? 'gd-blue' : 'gd-red'" th:text="${dp.price} >0 ? '+'+${dp.price} : ${dp.price}"></span>
 				</span>
 			</div>

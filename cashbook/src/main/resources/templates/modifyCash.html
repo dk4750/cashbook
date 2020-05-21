@@ -51,7 +51,7 @@
 					<td bgcolor="#EAEAEA" width="300px" style="font-weight:bold;">카테고리</td>
 					<td>
 						<select id="categoryName" name="categoryName" class="form-control">
-							<option th:value="${cash.categoryName}" style="color:grey;" th:text="${cash.categoryName}">카테고리를 선택하세요.</option>
+							<option th:value="${cash.categoryName}" style="color:grey;" th:text="${'---------------'+cash.categoryName+'---------------'}">카테고리를 선택하세요.</option>
 							<option th:each="list : ${list}" th:value="${list.categoryName}" th:text="${list.categoryName}"></option>			
 						</select>
 					</td>
@@ -60,7 +60,7 @@
 					<td bgcolor="#EAEAEA" style="font-weight:bold;">수입/지출</td>
 					<td>
 						<select id="cashKind" name="cashKind" class="form-control">
-							<option th:value="${cash.cashKind}" style="color:grey;" th:text="${cash.cashKind}">수입/지출 을 선택하세요.</option>
+							<option th:value="${cash.cashKind}" style="color:grey;" th:text="${'---------------'+cash.cashKind+'---------------'}">수입/지출 을 선택하세요.</option>
 							<option value="수입">수입</option>
 							<option value="지출">지출</option>
 						</select>
