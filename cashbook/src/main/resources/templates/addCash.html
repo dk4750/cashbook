@@ -15,7 +15,7 @@
 <style>
 	table{
 		margin-left:auto;
-		margin-right:auto;
+		margin-right:auto; 
 	}
 	
 	td,th{
@@ -28,6 +28,13 @@
 <script>
 	$(document).ready(function(){
 		$('#btn').click(function(){
+			$('#helper').empty();
+			if($('#categoryName').val() == ("")) {
+				$('#helper').append("카테고리를 입력해주세요.");
+				return;
+			} else if($('#cashKind').val() == ("")) {
+				return;
+			}
 			$('#form').submit();
 		});
 	});
@@ -88,7 +95,9 @@
 						<input type="text" name="cashMemo" id="cashMemo" class="form-control" placeHolder="메모를 입력하세요. (생략가능)">
 					</td>
 				</tr>
-			</table><br><br>
+			</table>
+			<div id="helper" style="color:red;"></div>
+			<br><br>
 			<div>
 				<input type="hidden" name="day" th:value="${day}">
 			</div>

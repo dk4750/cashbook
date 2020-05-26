@@ -77,6 +77,7 @@ public class MemberController {
 	// 멤버 삭제 액션 (포스트)
 	@PostMapping("/removeMember")
 	public String removeMember(HttpSession session, Model model, LoginMember loginMember) {
+		System.out.println(loginMember.getMemberPw() + " <== loginMemberPw");
 		int result = memberService.removeMember(loginMember);
 		System.out.println(result);
 		if(result == 1) {
@@ -197,7 +198,6 @@ public class MemberController {
 	// 로그인 액션
 	@PostMapping("/login")
 	public String login(LoginMember loginMember, HttpSession session, Model model) {	// HttpSession session = request.getSession();
-		
 		System.out.println(loginMember);
 		LoginMember returnLoginMember = memberService.login(loginMember);
 		System.out.println("returnLoginMember : " + returnLoginMember);

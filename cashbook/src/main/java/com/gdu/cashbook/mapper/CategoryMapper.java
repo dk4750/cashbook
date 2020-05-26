@@ -17,4 +17,7 @@ public interface CategoryMapper {
 	
 	// 카테고리 삭제하기
 	public int removeCategory(Map map);
+	
+	// 해당 멤버의 카테고리 전체삭제
+	public int removeCategoryAll(String memberId);
 }

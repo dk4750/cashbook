@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.gdu.cashbook.mapper.BoardMapper;
 import com.gdu.cashbook.mapper.CashMapper;
+import com.gdu.cashbook.mapper.CategoryMapper;
 import com.gdu.cashbook.mapper.MemberMapper;
 import com.gdu.cashbook.mapper.MemberidMapper;
 import com.gdu.cashbook.vo.LoginMember;
@@ -23,15 +25,12 @@ import com.gdu.cashbook.vo.MemberForm;
 // 이 클래스를 실행하다가 하나라도 예외를 발생하면 모두 롤백 시키는 트랜잭션. (메소드 위에 트랜잭션 에노테이션이 있으면 그 메소드를 실행 예외발생에만 롤백)
 @Service
 public class MemberService {
-	@Autowired
-	private MemberMapper memberMapper;
-	@Autowired
-	private MemberidMapper memberidMapper;
-	@Autowired
-	private JavaMailSender javaMailSender; // @Component가 없어서 오토와이어드 불가능..
-	@Autowired
-	private CashMapper cashMapper;
-	
+	@Autowired private MemberMapper memberMapper;
+	@Autowired private MemberidMapper memberidMapper;
+	@Autowired private JavaMailSender javaMailSender; // @Component가 없어서 오토와이어드 불가능..
+	@Autowired private CashMapper cashMapper;
+	@Autowired private BoardMapper boardMapper;
+	@Autowired private CategoryMapper categoryMapper;
 	
 	@Value("C:\\Users\\GD7\\Documents\\git-cashbook\\cashbook\\src\\main\\resources\\static\\upload\\")
 	private String path;
@@ -80,13 +79,15 @@ public class MemberService {
 				file.delete();
 			}
 		}
-		
 		// 2.. 삭제 결과값이 1일시 인서트..
-		if(cashMapper.removeCashByMember(memberId) != 0 && memberMapper.removeMember(loginMember) == 1) {
+		if((cashMapper.removeCashByMember(memberId) != 0 || cashMapper.removeCashByMember(memberId) == 0) 
+				&& (categoryMapper.removeCategoryAll(memberId) != 0 || categoryMapper.removeCategoryAll(memberId) == 0)
+				&& (boardMapper.removeBoardAll(memberId) != 0 || boardMapper.removeBoardAll(memberId) == 0)
+				&& memberMapper.removeMember(loginMember) == 1) {
 			return memberidMapper.insertMemberId(memberId);
+		} else {
+			return 0;
 		}
-			
-		return 0;
 	}
 	
 	// 멤버 정보 수정

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style th:include="/include/menu::side"></style>
+<style>
+	div.button{
+   		margin: auto;
+   		width: 40%;
+	}
+</style>
+<script>
+	$(document).ready(function(){
+		$('#btn').click(function(){
+			$('#form').submit();
+		});
+	});
+</script>
+</head>
+<body>
+	<!-- 사이드메뉴 -->
+	<div id="sidemenu" th:include="/include/menu::sidemenu" class="sidenav"></div>
+	<div class="container">
+		<br><br>
+		<h1 style="text-align:center;">게시글 작성</h1><br>
+		<br><br><br>
+		<form method="post" th:action="@{/addBoard}" id="form">
+		<div>
+			글제목
+			<input type="text" class="form-control" name="boardTitle" id="boardTitle">
+		</div>
+		
+		작성자 / 작성날짜
+		<div class="input-group mb-3">
+		    <input type="text" class="form-control" name="memberId" th:value="${memberId}" readonly="readonly">
+		    <input type="text" class="form-control" value="작성 시간으로 자동 설정됩니다." readonly="readonly">
+  		</div>
+  		글내용
+  		<div>
+  			<textarea rows="7" cols="155" class="form-control" name="boardContent" id="boardContent"></textarea>
+  		</div><br><br>
+  		<div class="button">
+  			<button type="button" id="btn" class="btn btn-primary btn-block btn-lg" style="text-align:center;">입력</button>
+  		</div>
+  		</form>
+	</div>
+</body>
+</html>

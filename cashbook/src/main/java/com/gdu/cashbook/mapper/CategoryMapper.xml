@@ -23,4 +23,11 @@
 		WHERE category_name = #{categoryName}
 		AND member_id = #{memberId}
 	</delete>
+	
+	<!-- 카테고리 전체삭제 -->
+	<delete id="removeCategoryAll" parameterType="String">
+		DELETE FROM
+			category
+		WHERE member_id = #{memberId}
+	</delete>
 </mapper>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>GetBoardOne</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style th:include="/include/menu::side"></style>
+<style>
+	#r{
+		text-align:right;
+	}
+</style>
+<script>
+	$(document).ready(function(){
+		$('#modifyBtn').click(function(){
+			console.log($('#memberId').val())
+			console.log($('#loginMemberId').val())
+			if($('#memberId').val() != $('#loginMemberId').val()) {
+				alert("작성자 또는 관리자만 수정 할 수 있습니다.");
+				return;
+			}
+			$('#modifyForm').submit();
+		});
+		
+		$('#removeBtn').click(function(){
+			console.log($('#memberId').val())
+			console.log($('#loginMemberId').val())
+			if($('#memberId').val() != $('#loginMemberId').val()) {
+				alert("작성자 또는 관리자만 삭제 할 수 있습니다.");
+				return;
+			} else {
+				if(confirm("정말 삭제하시겠습니까 ??") == true){
+			        $('#removeForm').submit();
+			    }
+			    else{
+			        return ;
+			    }
+			}
+		});
+	});
+</script>
+</head>
+<body>
+	<!-- 사이드메뉴 -->
+	<div id="sidemenu" th:include="/include/menu::sidemenu" class="sidenav"></div>
+	<div class="container">
+		<br><br>
+		<h1 style="text-align:center;">게시판 상세보기</h1><br>
+		<!-- 이전, 다음번호 if문 분기 -->
+		<a th:if="${board.boardNo} == ${firstBoardNo}" th:href="@{/getBoardOne(boardNo=(${board.boardNo}))}" style="float: left;" class="btn btn-secondary">이전글</a>
+		<a th:unless="${board.boardNo} == ${firstBoardNo}" th:href="@{/getBoardOne(boardNo=${previousNo})}" style="float: left;" class="btn btn-secondary">이전글</a>
+		
+		<a th:if="${board.boardNo} == ${lastBoardNo}" th:href="@{/getBoardOne(boardNo=(${board.boardNo}))}" style="float: right;" class="btn btn-secondary">다음글</a>
+		<a th:unless="${board.boardNo} == ${lastBoardNo}" th:href="@{/getBoardOne(boardNo=${nextNo})}" style="float: right;" class="btn btn-secondary">다음글</a>
+		<br><br><br>
+		<div>
+			글제목
+			<input type="text" readonly="readonly" th:value="${board.boardTitle}" class="form-control">
+		</div>
+		
+		작성자 / 작성날짜
+		<div class="input-group mb-3">
+		    <input type="text" class="form-control" readonly="readonly" th:value="${board.memberId}" id="memberId">
+		    <input type="text" class="form-control" readonly="readonly" th:value="${board.boardDate}">
+  		</div>
+  		글내용
+  		<div>
+  			<textarea rows="7" cols="155" class="form-control" th:text="${board.boardContent}" readonly="readonly"></textarea>
+  		</div><br>
+  		<div class="d-flex">
+	        <div class="p-2 mr-auto"><a th:href="@{/getBoardList(currentPage=${currentPage})}" class="btn btn-primary btn-lg">목록</a></div>
+	        <div class="p-2">
+	        	<form method="get" th:action="@{/modifyBoard}" id="modifyForm">
+	        		<button type="button" id="modifyBtn" class="btn btn-primary btn-lg">수정</button>
+	        		<input type="hidden" name="boardNo" th:value="${board.boardNo}">
+	        	</form>
+	        </div>
+	        <div class="p-2">
+	        	<form method="post" th:action="@{/removeBoard}" id="removeForm" name="removeForm">
+	        		<button type="button" id="removeBtn" class="btn btn-danger btn-lg" onclick="removeCheck()">삭제</button>
+	        		<input type="hidden" name="boardNo" th:value="${board.boardNo}">
+	        	</form>
+	        </div>
+        </div>
+        <div>
+        	<input type="hidden" th:value="${loginMemberId}" id="loginMemberId">
+        </div>
+        <div><br><hr><br>
+	        <form method="post" th:action="@{/}" id="commentForm">
+	        	<div class="input-group mb-3 d-flex justify-content-center">
+				<input type="text" name="commentContent" id="commentContent" class="form-control" placeholder="댓글을 입력하세요.">
+				<div class="input-group-append">
+ 					<button type="button" id="commentBtn" class="btn btn-secondary">댓글입력</button>
+ 				</div>
+			</div>
+	        </form>
+        </div>
+	</div>
+</body>
+</html>

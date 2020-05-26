@@ -17,11 +17,11 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-	</properties> 
+	</properties>
 
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
-		<!-- google mail보내기 서버 관련 -->
+		<!-- google mail보내기 서버 관련 --> 
 		<dependency>
     		<groupId>org.springframework.boot</groupId>
     		<artifactId>spring-boot-starter-mail</artifactId>

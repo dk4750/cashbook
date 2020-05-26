@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 네임스페이스는 매퍼의 위치와 매퍼의 이름 -->
+<mapper namespace="com.gdu.cashbook.mapper.CommentMapper">
+	<select id="getCommentList" parameterType="int" resultType="com.gdu.cashbook.vo.Comment">
+		SELECT
+			comment_no as commentNo,
+			board_no as boardNo,
+			comment_content as commentContent,
+			member_id as memberId
+		FROM comment
+		WHERE board_no = #{boardNo}
+	</select>
+</mapper>
