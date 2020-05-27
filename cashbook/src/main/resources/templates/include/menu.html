@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <style th:fragment="side">
 body {
   font-family: "Lato", sans-serif;
@@ -43,9 +54,10 @@ body {
 <body>
 	<!-- /include/menu::sidemenu -->
 	<div th:fragment="sidemenu">
-		<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<span style="font-weight:bold;" th:text="${session.loginMember.memberId}"></span> 님
-	</div><br>
+		<div>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img th:src="@{${'/upload/'+session.loginMember.memberPic}}" class="rounded" alt="Cinque Terre" width="120" height="120"><br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-weight:bold;" th:text="${session.loginMember.memberId}"></span> 님
+	</div><hr>
 					<a class="nav-link" th:href="@{/home}">HOME</a>
 	
 					<a class="nav-link" th:href="@{/memberInfo}">회원정보</a>

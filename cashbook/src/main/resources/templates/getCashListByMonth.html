@@ -43,6 +43,10 @@
 	#a{
 		color:black;
 	}
+	
+	#bb {
+		
+	}
 </style>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -61,10 +65,10 @@
 		<h1 style="text-align:left; font-weight:bold;" th:text="${year}+'년 가계부'"></h1>
 		<h3 th:if="${month} < 10" style="margin: 80px; text-align:center" th:text="'0' + ${month} + '월'"></h3>
 		<h3 th:unless="${month} < 10" style="margin: 80px; text-align:center" th:text="${month} + '월'"></h3>
-		<div>
-			<a id="aa" th:href="@{/getCashListByMonth(day=${day.plusMonths(-1)})}" style="float: left;" class="btn btn-secondary">이전</a>
-			<a id="b" th:href="@{/getCashListByMonth(day=${day.plusMonths(1)})}" style="float: right;" class="btn btn-secondary">다음</a>
-		</div>
+		<p style="line-height: 3000px;">
+			<a id="aa bb" th:href="@{/getCashListByMonth(day=${day.plusMonths(-1)})}" style="float: left;" class="btn btn-secondary">이전</a>
+			<a id="b bb" th:href="@{/getCashListByMonth(day=${day.plusMonths(1)})}" style="float: right;" class="btn btn-secondary">다음</a>
+		</p>
 		<div class = "gd-center">
 		<div class="gd-left gd-title">일</div>
 		<div class="gd-left gd-title">월</div>

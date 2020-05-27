@@ -4,7 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 네임스페이스는 매퍼의 위치와 매퍼의 이름 -->
 <mapper namespace="com.gdu.cashbook.mapper.CommentMapper">
-	<select id="getCommentList" parameterType="int" resultType="com.gdu.cashbook.vo.Comment">
+	<!-- 해당 멤버의 댓글 전체삭제 -->
+	<delete id="removeCommentAll" parameterType="String">
+		DELETE FROM comment
+		WHERE member_id = #{memberId}
+	</delete>
+
+	<!-- 댓글리스트 -->
+	<select id="getCommentList" parameterType="Map" resultType="com.gdu.cashbook.vo.Comment">
 		SELECT
 			comment_no as commentNo,
 			board_no as boardNo,
@@ -12,5 +19,41 @@
 			member_id as memberId
 		FROM comment
 		WHERE board_no = #{boardNo}
+		ORDER BY comment_no DESC
+		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
+	
+	<!-- 댓글추가 -->
+	<insert id="addComment" parameterType="com.gdu.cashbook.vo.Comment">
+		INSERT INTO comment(
+			comment_content,
+			board_no,
+			member_id)
+		VALUES(
+			#{commentContent},
+			#{boardNo},
+			#{memberId})
+	</insert>
+	
+	<!-- 댓글 업데이트 -->
+	<update id="modifyComment" parameterType="com.gdu.cashbook.vo.Comment">
+		UPDATE comment
+		SET
+			comment_content = #{commentContent}
+		WHERE comment_no = #{commentNo}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="removeComment" parameterType="com.gdu.cashbook.vo.Comment">
+		DELETE
+		FROM comment
+		WHERE comment_no = #{commentNo}
+	</delete>
+	
+	<!-- 총 댓글 갯수 -->
+	<select id="totalComment" resultType="int" parameterType="int">
+		SELECT IFNULL(COUNT(*), 0)
+		FROM comment
+		WHERE board_no = #{boardNo}
+	</select>	
 </mapper>

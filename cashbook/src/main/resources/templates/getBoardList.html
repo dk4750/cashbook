@@ -47,15 +47,26 @@
 		<br><br>
 		<h1 style="text-align:center;">게시판</h1>
 		<br>
-		<a th:href="@{/getBoardList(currentPage=1, searchWord=${searchWord})}" style="float: left;" class="btn btn-secondary">처음페이지</a>
-		<!-- 이전페이지 -로 안넘어가게 if문 설정 -->
-		<a th:if="${currentPage >= 2}" th:href="@{/getBoardList(currentPage=${currentPage - 1}, searchWord=${searchWord})}" style="float: left;" class="btn btn-secondary">이전</a>
-		<a th:unless="${currentPage >= 2}" th:href="@{/getBoardList(currentPage=1, searchWord=${searchWord})}" style="float: left;" class="btn btn-secondary">이전</a>
-		<a th:href="@{/getBoardList(currentPage=${lastPage}, searchWord=${searchWord})}" style="float: right;" class="btn btn-secondary">마지막페이지</a>
-		<!-- 다음페이지 lastPage 안넘어가게 if문 설정 -->
-		<a th:if="${currentPage < lastPage}" th:href="@{/getBoardList(currentPage=${currentPage + 1}, searchWord=${searchWord})}" style="float: right;" class="btn btn-secondary">다음</a>
-		<a th:unless="${currentPage < lastPage}" th:href="@{/getBoardList(currentPage=${lastPage}, searchWord=${searchWord})}" style="float: right;" class="btn btn-secondary">다음</a>
-		<br><br><br>
+		<div class="d-flex justify-content-between">
+  			<div class="p-2">
+  				<a th:href="@{/getBoardList(currentPage=1, searchWord=${searchWord})}" style="float: left;" class="btn btn-secondary">처음페이지</a>
+  			</div>
+  			<div class="p-2">
+  				<!-- 이전페이지 -로 안넘어가게 if문 설정 -->
+				<a th:if="${currentPage >= 2}" th:href="@{/getBoardList(currentPage=${currentPage - 1}, searchWord=${searchWord})}" style="float: left;" class="btn btn-secondary">이전</a>
+				<a th:unless="${currentPage >= 2}" th:href="@{/getBoardList(currentPage=1, searchWord=${searchWord})}" style="float: left;" class="btn btn-secondary">이전</a>
+  			</div>
+  			<pre>                                                                                           </pre>
+  			<div class="p-2">
+  				<!-- 다음페이지 lastPage 안넘어가게 if문 설정 -->
+				<a th:if="${currentPage < lastPage}" th:href="@{/getBoardList(currentPage=${currentPage + 1}, searchWord=${searchWord})}" style="float: right;" class="btn btn-secondary">다음</a>
+				<a th:unless="${currentPage < lastPage}" th:href="@{/getBoardList(currentPage=${lastPage}, searchWord=${searchWord})}" style="float: right;" class="btn btn-secondary">다음</a>
+  			</div>
+  			<div class="p-2">
+  				<a th:href="@{/getBoardList(currentPage=${lastPage}, searchWord=${searchWord})}" style="float: right;" class="btn btn-secondary">마지막페이지</a>
+  			</div>
+  		</div>
+		<br>
 		<table class="table table table-hover table-bordered" style="width:1100px; margin:auto; text-align:center;">
 			<thead>
 				<tr>
@@ -68,7 +79,14 @@
 			<tbody>
 				<tr th:each="list : ${list}">
 					<td th:text="${list.boardNo}"></td>
-					<td><a th:href="@{/getBoardOne(boardNo=${list.boardNo}, currentPage=${currentPage})}" th:text="${list.boardTitle}" style="color:black"></a></td>
+					<td>
+						<span>
+							<a th:href="@{/getBoardOne(boardNo=${list.boardNo}, currentPage=${currentPage})}" th:text="${list.boardTitle}" style="color:black"></a>
+						</span>
+						<span th:if="${#strings.equals(#strings.substring(list.boardDate,0,10), localDate)}" class="badge badge-danger" style="color:white;">
+							new
+						</span>
+					</td>
 					<td th:text="${list.memberId}"></td>
 					<td th:text="${list.boardDate}"></td>
 				</tr>

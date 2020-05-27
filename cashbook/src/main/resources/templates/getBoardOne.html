@@ -19,6 +19,14 @@
 </style>
 <script>
 	$(document).ready(function(){
+		// 엔터키 키다운
+		$("#commentContent").keydown(function(key) {
+            if(key.keyCode == 13) {
+            	event.preventDefault();
+            }
+        });
+		
+		// 게시글 수정 클릭시
 		$('#modifyBtn').click(function(){
 			console.log($('#memberId').val())
 			console.log($('#loginMemberId').val())
@@ -29,6 +37,7 @@
 			$('#modifyForm').submit();
 		});
 		
+		// 게시글 삭제 클릭할 시
 		$('#removeBtn').click(function(){
 			console.log($('#memberId').val())
 			console.log($('#loginMemberId').val())
@@ -44,6 +53,46 @@
 			    }
 			}
 		});
+		
+		// 댓글입력시
+		$('#commentBtn').click(function(){
+			if($('#commentContent').val() == "") {
+				alert("댓글을 입력해주세요.");
+				return;
+			}
+			$('#commentForm').submit();
+		});
+		
+		// 댓글 수정 클릭시
+		let count = 0;
+		$('#updateBtn').click(function(){
+			count+=1;
+			console.log(count);
+			console.log($('.commentMemberId').val());
+			console.log($('.loginMemberId').val());
+			
+			if($('.commentMemberId').val() != $('#loginMemberId').val()) {
+				alert("작성자 또는 관리자만 삭제 할 수 있습니다.");
+				count=0;
+				return;
+			} else if (count == 1) {
+				$('#commentContent2').prop('readonly', false);
+			}
+			if(count == 2) {
+				$('#updateContent').val($('#commentContent2').val());
+				$('#updateForm').submit();
+				count=0;
+			}
+		});
+		
+		// 댓글 삭제 클릭시
+		$('#deleteBtn').click(function(){
+			if($('#commentMemberId').val() != $('#loginMemberId').val()) {
+				alert("댓글 작성자만 삭제 할 수 있습니다.");
+				return;
+			}
+			$('#deleteForm').submit();
+		});
 	});
 </script>
 </head>
@@ -51,7 +100,7 @@
 	<!-- 사이드메뉴 -->
 	<div id="sidemenu" th:include="/include/menu::sidemenu" class="sidenav"></div>
 	<div class="container">
-		<br><br>
+		<br>
 		<h1 style="text-align:center;">게시판 상세보기</h1><br>
 		<!-- 이전, 다음번호 if문 분기 -->
 		<a th:if="${board.boardNo} == ${firstBoardNo}" th:href="@{/getBoardOne(boardNo=(${board.boardNo}))}" style="float: left;" class="btn btn-secondary">이전글</a>
@@ -74,34 +123,78 @@
   		<div>
   			<textarea rows="7" cols="155" class="form-control" th:text="${board.boardContent}" readonly="readonly"></textarea>
   		</div><br>
+  		
   		<div class="d-flex">
-	        <div class="p-2 mr-auto"><a th:href="@{/getBoardList(currentPage=${currentPage})}" class="btn btn-primary btn-lg">목록</a></div>
+  			<!-- 게시글 리스트 -->
+	        <div class="p-2 mr-auto"><a th:href="@{/getBoardList(currentPage=${currentPage})}" class="btn btn-primary">목록</a></div>
+	        <!-- 게시글 수정 -->
 	        <div class="p-2">
 	        	<form method="get" th:action="@{/modifyBoard}" id="modifyForm">
-	        		<button type="button" id="modifyBtn" class="btn btn-primary btn-lg">수정</button>
+	        		<button type="button" id="modifyBtn" class="btn btn-primary">수정</button>
 	        		<input type="hidden" name="boardNo" th:value="${board.boardNo}">
 	        	</form>
 	        </div>
+	        <!-- 게시글 삭제 -->
 	        <div class="p-2">
 	        	<form method="post" th:action="@{/removeBoard}" id="removeForm" name="removeForm">
-	        		<button type="button" id="removeBtn" class="btn btn-danger btn-lg" onclick="removeCheck()">삭제</button>
+	        		<button type="button" id="removeBtn" class="btn btn-danger" onclick="removeCheck()">삭제</button>
 	        		<input type="hidden" name="boardNo" th:value="${board.boardNo}">
 	        	</form>
 	        </div>
         </div>
         <div>
-        	<input type="hidden" th:value="${loginMemberId}" id="loginMemberId">
+        	<input type="hidden" th:value="${loginMemberId}" id="loginMemberId" class="loginMemberId">
         </div>
-        <div><br><hr><br>
-	        <form method="post" th:action="@{/}" id="commentForm">
-	        	<div class="input-group mb-3 d-flex justify-content-center">
+        <div><hr>
+        	<!-- 댓글 입력 -->
+	        <form method="post" th:action="@{/addComment}" id="commentForm">
+	        <div class="input-group mb-3 d-flex justify-content-center">
 				<input type="text" name="commentContent" id="commentContent" class="form-control" placeholder="댓글을 입력하세요.">
+				<input type="hidden" name="boardNo" th:value="${board.boardNo}">
+				<input type="hidden" th:value="${loginMemberId}" name="memberId">
 				<div class="input-group-append">
  					<button type="button" id="commentBtn" class="btn btn-secondary">댓글입력</button>
  				</div>
 			</div>
 	        </form>
+        </div><hr>
+        <!-- 댓글 리스트 반복문 시작부분 -->
+        <h5>작성자 / 댓글내용</h5>
+        <div th:each="list : ${commentList}" style="text-aling:center; text-align:center;">
+        	<div class="input-group mb-3 d-flex justify-content-center" style="width:1120x;">
+				<input type="text" name="memberId" id="commentMemberId" class="form-control commentMemberId" style="width:300px;" th:value="${list.memberId}" readonly="readonly">
+				<div class="input-group-append">
+ 					<input type="text" name="commentContent" id="commentContent2" class="form-control" style="width:800px;" th:value="${list.commentContent}" readonly="readonly">
+ 				</div>
+ 				<!-- 댓글 수정 -->
+ 				<div class="input-group-append">
+ 					<form method="post" th:action="@{/modifyComment}" id="updateForm">
+ 						<input type="hidden" name="commentNo" th:value="${list.commentNo}">
+ 						<input type="hidden" name="commentContent" id="updateContent">
+ 						<input type="hidden" name="boardNo" th:value="${list.boardNo}">
+ 						<button type="button" id="updateBtn" class="btn btn-primary">수정</button>
+ 					</form>
+ 				</div>
+ 				<!-- 댓글 삭제 -->
+ 				<div class="input-group-append">
+ 					<form method="post" th:action="@{/removeComment}" id="deleteForm">
+ 						<input type="hidden" name="commentNo" th:value="${list.commentNo}">
+ 						<input type="hidden" name="boardNo" th:value="${list.boardNo}">
+ 						<button type="button" id="deleteBtn" class="btn btn-danger">삭제</button>
+ 					</form>
+ 				</div>
+			</div>
         </div>
+        <div class="d-flex justify-content-around mb-3">
+    		<div class="p-2">
+    			<a th:if="${commentCurrentPage == 1}" th:href="@{/getBoardOne(boardNo=${board.boardNo}, commentCurrentPage=${commentCurrentPage})}" class="btn btn-secondary">이전</a>
+        	<a th:unless="${commentCurrentPage == 1}" th:href="@{/getBoardOne(boardNo=${board.boardNo}, commentCurrentPage=${commentCurrentPage-1})}" class="btn btn-secondary">이전</a>
+    		</div>
+    		<div class="p-2">
+    			<a th:if="${commentCurrentPage == commentLastPage}" th:href="@{/getBoardOne(boardNo=${board.boardNo}, commentCurrentPage=${commentCurrentPage})}" class="btn btn-secondary">다음</a>
+        	<a th:unless="${commentCurrentPage == commentLastPage}" th:href="@{/getBoardOne(boardNo=${board.boardNo}, commentCurrentPage=${commentCurrentPage+1})}" class="btn btn-secondary">다음</a>
+    		</div>
+ 		</div>
 	</div>
 </body>
 </html>

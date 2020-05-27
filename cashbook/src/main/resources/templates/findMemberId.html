@@ -12,9 +12,27 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script>
+	let helperInit = function() {
+		$('#nameHelper').text(""),
+		$('#mailHelper').text(""),
+		$('#phoneHelper').text("")
+	}
+
 	$(document).ready(function(){
 		$('#btn').click(function(){
-			$('#form').submit();
+			helperInit();
+			if($('#memberName').val().length < 4) {
+				$('#nameHelper').text("아이디를 4글자 이상 입력하세요.")
+				return;
+			} else if($('#memberMail').val().length == 0) {
+				$('#mailHelper').text("이메일을 입력하세요.")
+				return;
+			} else if($('#memberPhone').val().length == 0) {
+				$('#phoneHelper').text("전화번호를 입력하세요.")
+				return;
+			} else {
+				$('#form').submit();
+			}
 		});
 	});
 </script>
@@ -28,21 +46,24 @@
 	<div class = "container">
 		<div class="row">
 			<div class="col-3"></div>
-			<div class="col-6">
+			<div class="col-6"><br><br><br><br><br>
 				<h1 style="margin: 40px; text-align:center">아이디 찾기</h1>
 				<form id="form" method="post" th:action="@{/findMemberId}">
 					<div>
 						이름
 						<input type="text" name="memberName" id="memberName" class="form-control">
+						<span id="nameHelper" style="color:red;"></span>
 					</div><br>
 					<div>
 						이메일
 						<input type="text" name="memberMail" id="memberMail" class="form-control">
+						<span id="mailHelper" style="color:red;"></span>
 					</div><br>
 					<div>
 						전화번호
 						<input type="text" name="memberPhone" id="memberPhone" class="form-control">
-					</div><br>
+						<span id="phoneHelper" style="color:red;"></span>
+					</div>
 					<div th:text="${msg}" style="color:red;"></div>
 					<div th:text="${subMemberId}" style="color:blue;"></div><br>
 					<p>

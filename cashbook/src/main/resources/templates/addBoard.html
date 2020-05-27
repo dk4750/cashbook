@@ -21,7 +21,16 @@
 <script>
 	$(document).ready(function(){
 		$('#btn').click(function(){
-			$('#form').submit();
+			$('#helper').text("");
+			if($('#boardTitle').val().length == 0) {
+				$('#helper').text("작성하실 제목을 입력하세요.");
+				return;
+			} else if($('#boardContent').val().length == 0) {
+				$('#helper').text("작성하실 내용을 입력하세요.");
+				return;
+			} else {
+				$('#form').submit();
+			}
 		});
 	});
 </script>
@@ -36,7 +45,7 @@
 		<form method="post" th:action="@{/addBoard}" id="form">
 		<div>
 			글제목
-			<input type="text" class="form-control" name="boardTitle" id="boardTitle">
+			<input type="text" class="form-control" name="boardTitle" id="boardTitle" placeholder="제목을 입력하세요.">
 		</div>
 		
 		작성자 / 작성날짜
@@ -46,8 +55,10 @@
   		</div>
   		글내용
   		<div>
-  			<textarea rows="7" cols="155" class="form-control" name="boardContent" id="boardContent"></textarea>
+  			<textarea rows="7" cols="155" class="form-control" name="boardContent" id="boardContent" placeholder="내용을 입력하세요."></textarea>
   		</div><br><br>
+  		<div id="helper" style="color:red; text-align:center;"></div>
+  		<br>
   		<div class="button">
   			<button type="button" id="btn" class="btn btn-primary btn-block btn-lg" style="text-align:center;">입력</button>
   		</div>

@@ -1,5 +1,7 @@
 package com.gdu.cashbook.controller;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,7 +69,10 @@ public class BoardController {
 		}
 		
 		// 멤버 한명 상세정보 출력
-		Map<String, Object> map = boardService.getBoardOne(boardNo);
+		Map<String, Object> mapp = new HashMap<>();
+		mapp.put("boardNo", boardNo);
+		mapp.put("commentCurrentPage", 1);
+		Map<String, Object> map = boardService.getBoardOne(mapp);
 		model.addAttribute("board", map.get("board"));
 		
 		// 페이지 요청
@@ -110,10 +115,11 @@ public class BoardController {
 	
 	// 게시글 상세정보
 	@GetMapping("/getBoardOne")
-	public String getBoardOne(HttpSession session, Model model, @RequestParam(value="boardNo") int boardNo, @RequestParam(value="currentPage", defaultValue = "1") int currentPage) {
+	public String getBoardOne(HttpSession session, Model model, @RequestParam(value="boardNo") int boardNo, @RequestParam(value="currentPage", defaultValue = "1") int currentPage, @RequestParam(value="commentCurrentPage", defaultValue = "1") int commentCurrentPage) {
 		// 들어온 값 디버깅
 		System.out.println(boardNo);
 		System.out.println(currentPage);
+		System.out.println(commentCurrentPage);
 		
 		// 세션검사
 		if(session.getAttribute("loginMember") == null) {
@@ -123,10 +129,16 @@ public class BoardController {
 		// 로그인멤버아이디
 		String loginMemberId = ((LoginMember)(session.getAttribute("loginMember"))).getMemberId();
 		
+		Map<String, Object> mapp = new HashMap<>();
+		mapp.put("boardNo", boardNo);
+		mapp.put("commentCurrentPage", commentCurrentPage);
+		
 		// 상세정보 출력, 모델에 담아서 보내주기
-		Map<String, Object> map = boardService.getBoardOne(boardNo);
+		Map<String, Object> map = boardService.getBoardOne(mapp);
 		System.out.println(map.get("board"));
 		System.out.println(map.get("lastBoardNo"));
+		System.out.println(map.get("commentList") + " <== BoardController-commentList");
+		model.addAttribute("commentList", map.get("commentList"));
 		model.addAttribute("loginMemberId", loginMemberId);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("board", map.get("board"));
@@ -134,7 +146,8 @@ public class BoardController {
 		model.addAttribute("lastBoardNo", map.get("lastBoardNo"));
 		model.addAttribute("nextNo", map.get("nextNo"));
 		model.addAttribute("previousNo", map.get("previousNo"));
-		
+		model.addAttribute("commentCurrentPage", commentCurrentPage);
+		model.addAttribute("commentLastPage", map.get("commentLastPage"));
 		
 		// 페이지요청
 		return "getBoardOne";
@@ -159,11 +172,15 @@ public class BoardController {
 		System.out.println(map.get("list"));
 		System.out.println(map.get("lastPage"));
 		
+		LocalDate localDate = LocalDate.now();
+		System.out.println(localDate);
 		// model에 list 담아서 보내주기
+		
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("localDate", localDate);
 		
 		return "getBoardList";
 	}

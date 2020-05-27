@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.gdu.cashbook.mapper.BoardMapper;
 import com.gdu.cashbook.mapper.CashMapper;
 import com.gdu.cashbook.mapper.CategoryMapper;
+import com.gdu.cashbook.mapper.CommentMapper;
 import com.gdu.cashbook.mapper.MemberMapper;
 import com.gdu.cashbook.mapper.MemberidMapper;
 import com.gdu.cashbook.vo.LoginMember;
@@ -31,8 +32,9 @@ public class MemberService {
 	@Autowired private CashMapper cashMapper;
 	@Autowired private BoardMapper boardMapper;
 	@Autowired private CategoryMapper categoryMapper;
+	@Autowired private CommentMapper commentMapper;
 	
-	@Value("C:\\Users\\GD7\\Documents\\git-cashbook\\cashbook\\src\\main\\resources\\static\\upload\\")
+	@Value("C:\\Users\\gd7\\Documents\\workspace-spring-tool-suite-4-4.6.1.RELEASE\\maven.1590486053513\\cashbook\\src\\main\\resources\\static\\upload\\")
 	private String path;
 	
 	// 멤버 비밀번호 찾기.
@@ -82,6 +84,7 @@ public class MemberService {
 		// 2.. 삭제 결과값이 1일시 인서트..
 		if((cashMapper.removeCashByMember(memberId) != 0 || cashMapper.removeCashByMember(memberId) == 0) 
 				&& (categoryMapper.removeCategoryAll(memberId) != 0 || categoryMapper.removeCategoryAll(memberId) == 0)
+				&& (commentMapper.removeCommentAll(memberId) != 0 || commentMapper.removeCommentAll(memberId) == 0)
 				&& (boardMapper.removeBoardAll(memberId) != 0 || boardMapper.removeBoardAll(memberId) == 0)
 				&& memberMapper.removeMember(loginMember) == 1) {
 			return memberidMapper.insertMemberId(memberId);

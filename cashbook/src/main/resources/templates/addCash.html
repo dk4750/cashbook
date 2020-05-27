@@ -33,6 +33,13 @@
 				$('#helper').append("카테고리를 입력해주세요.");
 				return;
 			} else if($('#cashKind').val() == ("")) {
+				$('#helper').append("수입 / 지출 을 입력해주세요.")
+				return;
+			} else if($('#cashPrice').val() == ("")) {
+				$('#helper').append("금액을 입력해주세요.")
+				return;
+			} else if($('#cashPlace').val() == ("")) {
+				$('#helper').append("장소를 입력해주세요.")
 				return;
 			}
 			$('#form').submit();
@@ -95,8 +102,8 @@
 						<input type="text" name="cashMemo" id="cashMemo" class="form-control" placeHolder="메모를 입력하세요. (생략가능)">
 					</td>
 				</tr>
-			</table>
-			<div id="helper" style="color:red;"></div>
+			</table><br>
+			<div id="helper" style="color:red; text-align:center;"></div>
 			<br><br>
 			<div>
 				<input type="hidden" name="day" th:value="${day}">

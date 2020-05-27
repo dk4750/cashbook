@@ -12,9 +12,25 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script>
+
+	let helperInit = function() {
+		$('#idHelper').text(""),
+		$('#mailHelper').text(""),
+		$('#msg').text("")
+	}
+
 	$(document).ready(function(){
 		$('#btn').click(function(){
-			$('#form').submit();
+			helperInit();
+			if($('#memberId').val().length < 4) {
+				$('#idHelper').text("아이디를 4글자 이상 입력하세요.")
+				return;
+			} else if($('#memberMail').val().length == 0) {
+				$('#mailHelper').text("이메일을 입력하세요.")
+				return;
+			} else {
+				$('#form').submit();
+			}
 		});
 	});
 </script>
@@ -28,22 +44,24 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-3"></div>
-			<div class="col-6">
+			<div class="col-6"><br><br><br><br><br><br><br><br>
 				<h1 style="margin: 40px; text-align:center">비밀번호 찾기</h1>
 				<form method="post" th:action="@{/findMemberPw}" id="form">
 					<div>
 						아이디
 						<input type="text" name="memberId" id="memberId" class="form-control">
+						<span id="idHelper" style="color:red;"></span>
 					</div><br>
 					<div>
 						이메일
 						<input type="text" name="memberMail" id="memberMail" class="form-control">
+						<span id="mailHelper" style="color:red;"></span>
 					</div><br>
-					<div th:text="${msg}" style="color:red;"></div>
+					<div th:text="${msg}" style="color:red;" id="msg"></div>
 					<div th:text="${msg2}" style="color:blue;"></div><br>
 					<p>
 						<a th:href="@{/login}">로그인 페이지로 이동하시겠습니까?</a>
-					</p>
+					</p><br>
 					<div>
 						<button type="button" id="btn" class="btn btn-primary btn-block btn-lg">입력 완료</button>
 					</div>

@@ -3,7 +3,9 @@ package com.gdu.cashbook.vo;
 public class LoginMember {
 	private String memberId;
 	private String memberPw;
+	private String memberPic;
 	
+	// 겟터 셋터
 	public String getMemberId() {
 		return memberId;
 	}
@@ -16,10 +18,16 @@ public class LoginMember {
 	public void setMemberPw(String memberPw) {
 		this.memberPw = memberPw;
 	}
+	public String getMemberPic() {
+		return memberPic;
+	}
+	public void setMemberPic(String memberPic) {
+		this.memberPic = memberPic;
+	}
 	
-	// 투스트링 메소드
+	// toString();
 	@Override
 	public String toString() {
-		return "LoginMember [memberId=" + memberId + ", memberPw=" + memberPw + "]";
+		return "LoginMember [memberId=" + memberId + ", memberPw=" + memberPw + ", memberPic=" + memberPic + "]";
 	}
 }

@@ -14,7 +14,18 @@
 <style th:include="/include/menu::side"></style>
 <script>
 	$(document).ready(function(){
+		// 엔터키 키다운
+		$("#categoryName").keydown(function(key) {
+            if(key.keyCode == 13) {
+            	event.preventDefault();
+            }
+        });
+
 		$('#btn').click(function(){
+			if($('#categoryName').val() == ("")) {
+				$('#helper').text("추가하실 카테고리 이름을 입력하세요.");
+				return;
+			}
 			$('#form').submit();
 		});
 	});
@@ -41,9 +52,10 @@
 					<input type="hidden" name="day" th:value="${day}">
 					<div>
 						카테고리
-						<input type="text" name="categoryName" class="form-control" placeholder="추가하실 카테고리를 입력해주세요.">
+						<input type="text" name="categoryName" class="form-control" placeholder="추가하실 카테고리를 입력해주세요." id="categoryName">
 					</div><br>
-					<div>
+					<span id="helper" style="color:red;"></span>
+					<div><br>
 						<p><button type="button" id="btn" class="btn btn-primary btn-block btn-lg">카테고리 추가</button></p>
 					</div>
 				</form>

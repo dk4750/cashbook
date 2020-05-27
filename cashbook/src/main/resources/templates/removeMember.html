@@ -14,7 +14,12 @@
 <script>
 	$(document).ready(function(){
 		$('#btn').click(function(){
-			$('#form').submit();
+			if($('#memberPw').val().length == 0) {
+				$('#pwHelper').text("비밀번호를 입력해주세요.");
+				return;
+			} else {
+				$('#form').submit();
+			}
 		});
 	});
 </script>
@@ -43,7 +48,8 @@
 					</div><br>
 					<div>
 						비밀번호
-						<input type="password" name="memberPw" class="form-control" placeholder="본인 확인을 위해 비밀번호를 입력해주세요.">
+						<input type="password" name="memberPw" class="form-control" placeholder="본인 확인을 위해 비밀번호를 입력해주세요." id="memberPw">
+						<span id="pwHelper" style="color:red;"></span>
 					</div><br>
 					<span th:text="${msg}" style="color:red;"></span><br><br>
 					<div>

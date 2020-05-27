@@ -14,6 +14,10 @@
 <script>
 	$(document).ready(function(){
 		$('#btn').click(function(){
+			if($('#categoryName').val() == ("")) {
+				$('#helper').text("삭제하실 카테고리를 선택해주세요.");
+				return;
+			}
 			$('#form').submit();
 		});
 	});
@@ -45,7 +49,8 @@
 							<option th:each="list : ${list}" th:value="${list.categoryName}" th:text="${list.categoryName}"></option>
 						</select>
 					</div><br>
-					<div>
+					<span id="helper" style="color:red;"></span>
+					<div><br>
 						<p><button type="button" id="btn" class="btn btn-danger btn-block btn-lg">카테고리 삭제</button></p>
 					</div>
 				</form>
