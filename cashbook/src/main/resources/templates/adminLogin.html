@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Admin Login</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<script>
+	let helperInit = function() {
+		$('#idHelper').text("");
+		$('#pwHelper').text("");
+		$('#msg').text("");
+	}
+
+	$(document).ready(function(){
+		$('#btn').click(function(){
+			helperInit();
+			// 유효성 검사
+			if($('#memberId').val().length < 4) {
+				$('#idHelper').text("아이디를 4글자 이상 입력해주세요.");
+				$('#memberId').focus();
+			} else if($('#memberPw').val().length < 4) {
+				$('#pwHelper').text("비밀번호를 4글자 이상 입력해주세요.");
+				$('#memberPw').focus();
+			}
+			// id와 pw를 4글자 이상씩 입력했다면 서브밋
+			if($('#memberId').val().length > 3 && $('#memberPw').val().length > 3) {
+				$('#myForm').submit();
+			}
+		});
+	});
+</script>
+<style>
+	p {
+		text-align: center;
+	}
+</style>
+<body>
+	<div class="container">
+		<div class = "row">
+			<div class="col-3"></div>
+			<div class="col-6">
+				<!-- 제목 --><br><br><br><br><br><br><br><br>
+				<h1 style="margin: 40px; text-align:center">관리자 로그인</h1>
+				<!-- 로그인 폼 -->
+				<form method="post" action="/adminLogin" id="myForm">
+					<div>
+						아이디<br>
+						<input type="text" name="memberId" id="memberId" class="form-control" placeholder="아이디를 입력하세요.">
+						<span id="idHelper" style="color:red;"></span>
+					</div><br>
+					<div>
+						비밀번호<br>
+						<input type="password" name="memberPw" id="memberPw" class="form-control" placeholder="비밀번호를 입력하세요.">
+						<span id="pwHelper" style="color:red;"></span>
+					</div>
+					<div><br>
+						<span id="msg" th:text="${msg}" style="color:red;"></span>
+					</div>
+					<div>
+						<button type="button" id="btn" class="btn btn-primary btn-block btn-lg">로그인</button>
+					</div>
+				</form>
+			</div>
+			<div class="col-3"></div>
+		</div>
+	</div>
+</body>
+</html>
