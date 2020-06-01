@@ -10,7 +10,7 @@ public class HomeController {
 	// 홈 페이지요청
 	@GetMapping("/home")
 	public String home(HttpSession session) {
-		if(session.getAttribute("loginMember") == null) {
+		if(session.getAttribute("loginMember") == null && session.getAttribute("admin") == null) {
 			return "redirect:/login";
 		}
 		return "home";

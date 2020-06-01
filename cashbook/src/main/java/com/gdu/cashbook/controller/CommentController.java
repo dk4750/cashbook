@@ -18,15 +18,21 @@ public class CommentController {
 	@PostMapping("/addComment")
 	public String addComment(HttpSession session, Comment comment) {
 		// 세션검사
-		if(session.getAttribute("loginMember") == null) {
-			return "redirect:/";
+		if(session.getAttribute("loginMember") == null && session.getAttribute("admin") == null) {
+			return "redirect:/login";
 		}
 		
 		// 디버깅
 		System.out.println(comment + " <== 입력받은 댓글 내용");
+		System.out.println(comment.getAdminId() + " <== adminId");
 		
 		// 인서트하기
-		commentService.addComment(comment);
+		if(comment.getAdminId() == null) {
+			commentService.addComment(comment);
+		} else if(comment.getMemberId() == null) {
+			commentService.addCommentByAdmin(comment);
+		}
+		
 		
 		// getBoardOne 으로 리다이렉트 위해서 boardNo 받아와서 보내주기
 		int boardNo = comment.getBoardNo();
@@ -39,8 +45,8 @@ public class CommentController {
 	@PostMapping("/modifyComment")
 	public String modifyComment(HttpSession session, Comment comment) {
 		// 세션검사
-		if(session.getAttribute("loginMember") == null) {
-			return "redirect:/";
+		if(session.getAttribute("loginMember") == null && session.getAttribute("admin") == null) {
+			return "redirect:/login";
 		}
 		
 		// 들어온 값 디버깅
@@ -57,8 +63,8 @@ public class CommentController {
 	@PostMapping("/removeComment")
 	public String removeComment(HttpSession session, Comment comment) {
 		// 세션검사
-		if(session.getAttribute("loginMember") == null) {
-			return "redirect:/";
+		if(session.getAttribute("loginMember") == null && session.getAttribute("admin") == null) {
+			return "redirect:/login";
 		}
 		
 		// 들어온 값 디버깅

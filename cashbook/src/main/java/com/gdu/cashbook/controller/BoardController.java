@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gdu.cashbook.service.BoardService;
+import com.gdu.cashbook.vo.Admin;
 import com.gdu.cashbook.vo.Board;
 import com.gdu.cashbook.vo.LoginMember;
 
@@ -26,8 +27,8 @@ public class BoardController {
 	@PostMapping("/removeBoard")
 	public String removeBoard(HttpSession session, @RequestParam(value="boardNo") int boardNo) {
 		// 세션검사
-		if(session.getAttribute("loginMember") == null) {
-			return "redirect:/index";
+		if(session.getAttribute("loginMember") == null && session.getAttribute("admin") == null) {
+			return "redirect:/login";
 		}
 		
 		// 디버깅
@@ -44,8 +45,8 @@ public class BoardController {
 	@PostMapping("/modifyBoard")
 	public String modifyBoard(HttpSession session, Board board) {
 		// 세션검사
-		if(session.getAttribute("loginMember") == null) {
-			return "redirect:/index";
+		if(session.getAttribute("loginMember") == null && session.getAttribute("admin") == null) {
+			return "redirect:/login";
 		}
 		//들어온 값 디버깅
 		System.out.println(board + " <== board FROM modifyBoard");
@@ -64,8 +65,8 @@ public class BoardController {
 		System.out.println(boardNo + " <== boardNo from modify");
 		
 		// 세션검사
-		if(session.getAttribute("loginMember") == null) {
-			return "redirect:/index";
+		if(session.getAttribute("loginMember") == null && session.getAttribute("admin") == null) {
+			return "redirect:/login";
 		}
 		
 		// 멤버 한명 상세정보 출력
@@ -83,8 +84,8 @@ public class BoardController {
 	@PostMapping("/addBoard")
 	public String addBoard(HttpSession session, Board board) {
 		// 세션검사
-		if(session.getAttribute("loginMember") == null) {
-			return "redirect:/index";
+		if(session.getAttribute("loginMember") == null && session.getAttribute("admin") == null) {
+			return "redirect:/login";
 		}
 		
 		// 들어온 값 디버깅
@@ -101,12 +102,18 @@ public class BoardController {
 	@GetMapping("/addBoard")
 	public String addBoard(HttpSession session, Model model) {
 		// 세션검사
-		if(session.getAttribute("loginMember") == null) {
-			return "redirect:/index";
+		if(session.getAttribute("loginMember") == null && session.getAttribute("admin") == null) {
+			return "redirect:/login";
 		}
 		
 		// 멤버아이디 고정.로그인아이디로
-		String memberId = ((LoginMember)(session.getAttribute("loginMember"))).getMemberId();
+		String memberId = "";
+		
+		if(session.getAttribute("loginMember") == null) {
+			memberId = (String)session.getAttribute("admin");
+		} else if(session.getAttribute("admin") == null) {
+			memberId = ((LoginMember)(session.getAttribute("loginMember"))).getMemberId();
+		}
 		model.addAttribute("memberId", memberId);
 		
 		// 페이지요청
@@ -122,12 +129,20 @@ public class BoardController {
 		System.out.println(commentCurrentPage);
 		
 		// 세션검사
-		if(session.getAttribute("loginMember") == null) {
-			return "redirect:/index";
+		if(session.getAttribute("loginMember") == null && session.getAttribute("admin") == null) {
+			return "redirect:/login";
 		}
 		
-		// 로그인멤버아이디
-		String loginMemberId = ((LoginMember)(session.getAttribute("loginMember"))).getMemberId();
+		// 로그인멤버아이디.. 관리자와 일반회원 분리
+		System.out.println(session.getAttribute("admin") + " <== adminLogin");
+		String loginMemberId = "";
+		if(session.getAttribute("admin") != null) {
+			loginMemberId = (String)session.getAttribute("admin");
+			System.out.println(loginMemberId + " <== Admin loginMemberId");
+		} else {
+			loginMemberId = ((LoginMember)(session.getAttribute("loginMember"))).getMemberId();
+			System.out.println(loginMemberId);
+		}
 		
 		Map<String, Object> mapp = new HashMap<>();
 		mapp.put("boardNo", boardNo);
@@ -157,8 +172,8 @@ public class BoardController {
 	@GetMapping("/getBoardList")
 	public String getBoardList(HttpSession session, Model model,@RequestParam(value="currentPage", defaultValue = "1") int currentPage, @RequestParam(value="searchWord", defaultValue = "") String searchWord) {
 		// 세션검사
-		if(session.getAttribute("loginMember") == null) {
-			return "redirect:/index";
+		if(session.getAttribute("loginMember") == null && session.getAttribute("admin") == null) {
+			return "redirect:/login";
 		}
 		
 		// searchWord 디버깅

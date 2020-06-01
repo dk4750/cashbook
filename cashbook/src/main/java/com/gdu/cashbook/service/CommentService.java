@@ -25,6 +25,11 @@ public class CommentService {
 		return commentMapper.getCommentList(map);
 	}
 	
+	// 관리자 댓글 입력하기
+	public int addCommentByAdmin(Comment comment) {
+		return commentMapper.addCommentByAdmin(comment);
+	}
+	
 	// 댓글 입력하기
 	public int addComment(Comment comment) {
 		return commentMapper.addComment(comment);

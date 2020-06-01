@@ -1,5 +1,7 @@
 package com.gdu.cashbook.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,30 @@ import com.gdu.cashbook.vo.MemberForm;
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
+	
+	// 멤버 추방
+	@GetMapping("/removeByAdmin")
+	public String removeByAdmin(HttpSession session, @RequestParam("memberId") String memberId) {
+		System.out.println(memberId);
+		
+		memberService.removeByAdmin(memberId);
+		
+		return "redirect:/getMemberList";
+	}
+	
+	// 멤버 리스트 전체출력
+	@GetMapping("/getMemberList")
+	public String getMemberList(HttpSession session, Model model) {
+		if(session.getAttribute("admin") == null || session.getAttribute("loginMember") != null) {
+			return "redirect:/home";
+		}
+		
+		List<Member> list = memberService.getMemberListAll();
+		System.out.println(list + " <== memberList");
+		
+		model.addAttribute("list", list);
+		return "getMemberList";
+	}
 	
 	// 멤버 비밀번호 찾기 겟매핑
 	@GetMapping("/findMemberPw")

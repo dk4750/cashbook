@@ -23,15 +23,15 @@
 		$('#btn').click(function(){
 			helperInit();
 			// 유효성 검사
-			if($('#memberId').val().length < 4) {
+			if($('#adminId').val().length < 4) {
 				$('#idHelper').text("아이디를 4글자 이상 입력해주세요.");
-				$('#memberId').focus();
-			} else if($('#memberPw').val().length < 4) {
+				$('#adminId').focus();
+			} else if($('#adminPw').val().length < 4) {
 				$('#pwHelper').text("비밀번호를 4글자 이상 입력해주세요.");
-				$('#memberPw').focus();
+				$('#adminPw').focus();
 			}
 			// id와 pw를 4글자 이상씩 입력했다면 서브밋
-			if($('#memberId').val().length > 3 && $('#memberPw').val().length > 3) {
+			if($('#adminId').val().length > 3 && $('#adminPw').val().length > 3) {
 				$('#myForm').submit();
 			}
 		});
@@ -53,12 +53,12 @@
 				<form method="post" action="/adminLogin" id="myForm">
 					<div>
 						아이디<br>
-						<input type="text" name="memberId" id="memberId" class="form-control" placeholder="아이디를 입력하세요.">
+						<input type="text" name="adminId" id="adminId" class="form-control" placeholder="아이디를 입력하세요.">
 						<span id="idHelper" style="color:red;"></span>
 					</div><br>
 					<div>
 						비밀번호<br>
-						<input type="password" name="memberPw" id="memberPw" class="form-control" placeholder="비밀번호를 입력하세요.">
+						<input type="password" name="adminPw" id="adminPw" class="form-control" placeholder="비밀번호를 입력하세요.">
 						<span id="pwHelper" style="color:red;"></span>
 					</div>
 					<div><br>

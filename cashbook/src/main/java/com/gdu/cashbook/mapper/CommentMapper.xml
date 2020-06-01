@@ -16,14 +16,15 @@
 			comment_no as commentNo,
 			board_no as boardNo,
 			comment_content as commentContent,
-			member_id as memberId
+			member_id as memberId,
+			admin_id as adminId
 		FROM comment
 		WHERE board_no = #{boardNo}
 		ORDER BY comment_no DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
-	<!-- 댓글추가 -->
+	<!-- 일반회원 댓글추가 -->
 	<insert id="addComment" parameterType="com.gdu.cashbook.vo.Comment">
 		INSERT INTO comment(
 			comment_content,
@@ -33,6 +34,20 @@
 			#{commentContent},
 			#{boardNo},
 			#{memberId})
+	</insert>
+	
+	<!-- 관리자 댓글추가 -->
+	<insert id="addCommentByAdmin" parameterType="com.gdu.cashbook.vo.Comment">
+		INSERT INTO comment(
+			comment_content,
+			board_no,
+			admin_id,
+			member_id)
+		VALUES(
+			#{commentContent},
+			#{boardNo},
+			#{adminId},
+			#{adminId})
 	</insert>
 	
 	<!-- 댓글 업데이트 -->

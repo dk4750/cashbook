@@ -2,6 +2,7 @@ package com.gdu.cashbook.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,25 @@ public class MemberService {
 	
 	@Value("C:\\Users\\gd7\\Documents\\workspace-spring-tool-suite-4-4.6.1.RELEASE\\maven.1590486053513\\cashbook\\src\\main\\resources\\static\\upload\\")
 	private String path;
+	
+	// 멤버 한명 삭제.. 관리자 기능
+	public int removeByAdmin(String memberId) {
+		int row = 0;
+		if((cashMapper.removeCashByMember(memberId) != 0 || cashMapper.removeCashByMember(memberId) == 0) 
+				&& (categoryMapper.removeCategoryAll(memberId) != 0 || categoryMapper.removeCategoryAll(memberId) == 0)
+				&& (commentMapper.removeCommentAll(memberId) != 0 || commentMapper.removeCommentAll(memberId) == 0)
+				&& (boardMapper.removeBoardAll(memberId) != 0 || boardMapper.removeBoardAll(memberId) == 0)
+				&& (memberMapper.removeByAdmin(memberId) == 1)) {
+			memberidMapper.insertMemberId(memberId);
+			row = 1;
+		}
+		return row;
+	}
+	
+	// 멤버 리스트 출력
+	public List<Member> getMemberListAll() {
+		return memberMapper.selectMemberListAll();
+	}
 	
 	// 멤버 비밀번호 찾기.
 	public int getMemberPw(Member member) {
@@ -86,7 +106,7 @@ public class MemberService {
 				&& (categoryMapper.removeCategoryAll(memberId) != 0 || categoryMapper.removeCategoryAll(memberId) == 0)
 				&& (commentMapper.removeCommentAll(memberId) != 0 || commentMapper.removeCommentAll(memberId) == 0)
 				&& (boardMapper.removeBoardAll(memberId) != 0 || boardMapper.removeBoardAll(memberId) == 0)
-				&& memberMapper.removeMember(loginMember) == 1) {
+				&& (memberMapper.removeMember(loginMember) == 1)) {
 			return memberidMapper.insertMemberId(memberId);
 		} else {
 			return 0;

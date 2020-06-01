@@ -54,29 +54,31 @@ body {
 <body>
 	<!-- /include/menu::sidemenu -->
 	<div th:fragment="sidemenu">
-		<div>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img th:src="@{${'/upload/'+session.loginMember.memberPic}}" class="rounded" alt="Cinque Terre" width="120" height="120"><br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-weight:bold;" th:text="${session.loginMember.memberId}"></span> 님
-	</div><hr>
-					<a class="nav-link" th:href="@{/home}">HOME</a>
-	
-					<a class="nav-link" th:href="@{/memberInfo}">회원정보</a>
-				
-					<a class="nav-link" th:href="@{/getCashListByDate}">일간가계부</a>
-					
-					<a class="nav-link" th:href="@{/getCashListByMonth}">월간가계부</a>
-				
-					<a class="nav-link" th:href="@{/getBoardList}">게시판</a>
-					<br>
-					<a class="nav-link" th:href="@{/logout}">로그아웃</a>
+		<!-- 일반회원 -->
+		<div th:if="${session.loginMember?.memberId}">
+			<div>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img th:src="@{${'/upload/'+session.loginMember.memberPic}}" class="rounded" alt="Cinque Terre" width="120" height="120"><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-weight:bold;" th:text="${session.loginMember.memberId}"></span> 님
+			</div><hr>
+			<a class="nav-link" th:href="@{/home}">HOME</a>
+			<a class="nav-link" th:href="@{/memberInfo}">회원정보</a>
+			<a class="nav-link" th:href="@{/getCashListByDate}">일간가계부</a>
+			<a class="nav-link" th:href="@{/getCashListByMonth}">월간가계부</a>
+			<a class="nav-link" th:href="@{/getBoardList}">게시판</a>
+			<br>
+			<a class="nav-link" th:href="@{/logout}">로그아웃</a>
+		</div>
+		<!-- 관리자 -->
+		<div th:if="${session.admin}">
+			<div>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-weight:bold;" th:text="${session.admin}"></span> 님
+			</div><hr>
+			<a class="nav-link" th:href="@{/home}">HOME</a>
+			<a class="nav-link" th:href="@{/getMemberList}">회원관리</a>
+			<a class="nav-link" th:href="@{/getBoardList}">게시판</a>
+			<br>
+			<a class="nav-link" th:href="@{/logout}">로그아웃</a>
+		</div>
 	</div>
-	
-	<!-- fragment -->
-	
-	<!-- fragment -->
-	
-	<!-- fragment -->
-	
-	<!-- fragment -->
 </body>
 </html>

@@ -4,5 +4,11 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 네임스페이스는 매퍼의 위치와 매퍼의 이름 -->
 <mapper namespace="com.gdu.cashbook.mapper.AdminMapper">
-	
+	<select id="selectAdmin" parameterType="com.gdu.cashbook.vo.Admin" resultType="com.gdu.cashbook.vo.Admin">
+		SELECT
+			admin_id as adminId
+		FROM admin
+		WHERE admin_id = #{adminId}
+		AND admin_pw = #{adminPw}
+	</select>
 </mapper>

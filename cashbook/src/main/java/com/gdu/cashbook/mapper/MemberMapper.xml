@@ -6,6 +6,23 @@
 <mapper namespace="com.gdu.cashbook.mapper.MemberMapper">
 	<!-- id는 매퍼의 메소드이름과 동일하게.	파라미터타입은 항상 리스트. 클래스데이터타입의 위치와 이름을 작성 -->
 	
+	<!-- 멤버 한명 삭제.. 관리자 기능 -->
+	<delete id="removeByAdmin" parameterType="String">
+		DELETE FROM member
+		WHERE member_id = #{memberId}
+	</delete>
+		
+	<!-- 멤버 리스트 출력 -->
+	<select id="selectMemberListAll" resultType="com.gdu.cashbook.vo.Member">
+		SELECT
+			member_id as memberId,
+			member_name as memberName,
+			member_phone as memberPhone,
+			member_addr as memberAddr,
+			member_mail as memberMail
+		FROM member
+	</select>
+	
 	<!-- 멤버 탈퇴시 사진 이름 가져오기 -->
 	<select id="selectMemberPic" parameterType="String" resultType="String">
 		SELECT member_pic

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.gdu.cashbook.service.AdminService;
+import com.gdu.cashbook.vo.Admin;
 import com.gdu.cashbook.vo.LoginMember;
 
 @Controller
@@ -29,15 +30,19 @@ public class AdminController {
 	
 	// 로그인 액션
 	@PostMapping("/adminLogin")
-	public String login(LoginMember loginMember, HttpSession session, Model model) {	// HttpSession session = request.getSession();
-		/*
-		 * System.out.println(loginMember); LoginMember returnLoginMember =
-		 * memberService.login(loginMember); System.out.println("returnLoginMember : " +
-		 * returnLoginMember); if(returnLoginMember == null) { // 로그인 실패시
-		 * model.addAttribute("msg", "아이디와 비밀번호를 확인하세요"); return "login"; } else { //
-		 * 로그인 성공시 session.setAttribute("adminLogin", returnLoginMember); return
-		 * "redirect:/home"; }
-		 */
-		return null;
+	public String login(Admin admin, HttpSession session, Model model) {	// HttpSession session = request.getSession();
+		// Admin debuging
+		System.out.println(admin);
+		
+		// 로그인 결과 가져오기 null일시 메시지와 리턴, null이 아닐시 세션에 값 저장.
+		String returnAdmin = adminService.selectAdmin(admin).getAdminId();
+		System.out.println(returnAdmin + " <== returnAdmin");
+		if(returnAdmin == null) {
+			model.addAttribute("msg", "아이디와 비밀번호를 확인하세요.");
+			return "adminLogin";
+		} else {
+			session.setAttribute("admin", returnAdmin);
+			return "redirect:/home";
+		}
 	}
 }

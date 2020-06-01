@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>getBoardList</title>
+<title>getMemberList</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -12,40 +12,13 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style th:include="/include/menu::side"></style>
-<style>
-	#p{
-		position: absolute;
-	}
-	
-	#search{
-		display : block;
-		margin : 0 auto;
-		width:600px;
-		height:30px;
-	}
-</style>
-<script>
-	// 도큐먼트가 준비되고
-	$(document).ready(function(){
-		// id가 btn인 녀석의 클릭이벤트가 발생했을때
-		$('#btn').click(function(){
-			// serarchWord의 값이 공백이라면 리턴 후 포커스를 이쪽으로.
-			if($('#searchWord').val() == "") {
-				$('#searchWord').focus();
-				return;
-			}
-			// if문에서 안걸러졌으면 서브밋
-			$('#form').submit();
-		});
-	});
-</script>
 </head>
 <body>
 	<!-- 사이드메뉴 -->
 	<div id="sidemenu" th:include="/include/menu::sidemenu" class="sidenav"></div>
 	<div class="container">
 		<br><br>
-		<h1 style="text-align:center;">게시판</h1>
+		<h1 style="text-align:center;">회원 리스트</h1>
 		<br>
 		<div class="d-flex justify-content-between">
   			<div class="p-2">
@@ -70,44 +43,27 @@
 		<table class="table table table-hover table-bordered" style="width:1100px; margin:auto; text-align:center;">
 			<thead>
 				<tr>
-					<th bgcolor="#EAEAEA">글번호</th>
-					<th bgcolor="#EAEAEA">글제목</th>
-					<th bgcolor="#EAEAEA">작성자</th>
-					<th bgcolor="#EAEAEA">작성날짜</th>
+					<th bgcolor="#EAEAEA">아이디</th>
+					<th bgcolor="#EAEAEA">성명</th>
+					<th bgcolor="#EAEAEA">전화번호</th>
+					<th bgcolor="#EAEAEA">주소</th>
+					<th bgcolor="#EAEAEA">메일</th>
+					<th bgcolor="#EAEAEA">회원 추방</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="list : ${list}">
-					<td th:text="${list.boardNo}"></td>
-					<td>
-						<span th:if="${list.memberId == 'admin'}" class="badge badge-primary" style="color:white;">
-							관리자
-						</span>
-						<span>
-							<a th:href="@{/getBoardOne(boardNo=${list.boardNo}, currentPage=${currentPage})}" th:text="${list.boardTitle}" style="color:black"></a>
-						</span>
-						<span th:if="${#strings.equals(#strings.substring(list.boardDate,0,10), localDate)}" class="badge badge-danger" style="color:white;">
-							new
-						</span>
-					</td>
 					<td th:text="${list.memberId}"></td>
-					<td th:text="${list.boardDate}"></td>
+					<td th:text="${list.memberName}"></td>
+					<td th:text="${list.memberPhone}"></td>
+					<td th:text="${list.memberAddr}"></td>
+					<td th:text="${list.memberMail}"></td>
+					<td>
+						<a th:href="@{/removeByAdmin(memberId=${list.memberId})}" style="color:black;">회원 추방</a>
+					</td>
 				</tr>
 			</tbody>
-		</table><br>
-		<div>
-			<a th:href="@{/addBoard}" style="float:right;" class="btn btn-primary">글작성</a>
-		</div><br><br>
-		
-		<!-- 검색기능 -->
-		<form id="form" method="get" th:action="@{/getBoardList}">
-			<div class="input-group mb-3 d-flex justify-content-center" style="width:300px;" id="search">
-				<input type="text" name="searchWord" id="searchWord" class="form-control">
-				<div class="input-group-append">
- 					<button type="button" id="btn" class="btn btn-secondary">검색</button>
- 				</div>
-			</div>
-		</form>
+		</table>
 	</div>
 </body>
 </html>

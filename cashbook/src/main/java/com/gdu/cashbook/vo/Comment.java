@@ -5,6 +5,7 @@ public class Comment {
 	private int boardNo;
 	private String commentContent;
 	private String memberId;
+	private String adminId;
 	
 	// 겟터 셋터
 	public int getCommentNo() {
@@ -31,11 +32,17 @@ public class Comment {
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
+	public String getAdminId() {
+		return adminId;
+	}
+	public void setAdminId(String adminId) {
+		this.adminId = adminId;
+	}
 	
 	// toString()
 	@Override
 	public String toString() {
 		return "Comment [commentNo=" + commentNo + ", boardNo=" + boardNo + ", commentContent=" + commentContent
-				+ ", memberId=" + memberId + "]";
+				+ ", memberId=" + memberId + ", adminId=" + adminId + "]";
 	}
 }

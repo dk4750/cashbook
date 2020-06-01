@@ -12,6 +12,9 @@ public interface CommentMapper {
 	// Comment List 출력
 	public List<Comment> getCommentList(Map<String, Object> map);
 	
+	// 관리자 댓글입력
+	public int addCommentByAdmin(Comment comment);
+	
 	// 댓글 입력
 	public int addComment(Comment comment);
 	

@@ -30,7 +30,7 @@
 		$('#modifyBtn').click(function(){
 			console.log($('#memberId').val())
 			console.log($('#loginMemberId').val())
-			if($('#memberId').val() != $('#loginMemberId').val()) {
+			if(($('#memberId').val() != $('#loginMemberId').val()) && ($('#loginMemberId').val() != "admin")) {
 				alert("작성자 또는 관리자만 수정 할 수 있습니다.");
 				return;
 			}
@@ -41,7 +41,7 @@
 		$('#removeBtn').click(function(){
 			console.log($('#memberId').val())
 			console.log($('#loginMemberId').val())
-			if($('#memberId').val() != $('#loginMemberId').val()) {
+			if(($('#memberId').val() != $('#loginMemberId').val()) && ($('#loginMemberId').val() != "admin")) {
 				alert("작성자 또는 관리자만 삭제 할 수 있습니다.");
 				return;
 			} else {
@@ -71,12 +71,14 @@
 			console.log($('.commentMemberId').val());
 			console.log($('.loginMemberId').val());
 			
-			if($('.commentMemberId').val() != $('#loginMemberId').val()) {
-				alert("작성자 또는 관리자만 삭제 할 수 있습니다.");
+			if(($('.commentMemberId').val() != $('#loginMemberId').val()) && ($('#loginMemberId').val() != "admin")) {
+				alert("댓글 작성자 또는 관리자만 수정 할 수 있습니다.");
 				count=0;
 				return;
 			} else if (count == 1) {
 				$('#commentContent2').prop('readonly', false);
+				$('#commentContent2').focus();
+				
 			}
 			if(count == 2) {
 				$('#updateContent').val($('#commentContent2').val());
@@ -87,8 +89,8 @@
 		
 		// 댓글 삭제 클릭시
 		$('#deleteBtn').click(function(){
-			if($('#commentMemberId').val() != $('#loginMemberId').val()) {
-				alert("댓글 작성자만 삭제 할 수 있습니다.");
+			if(($('#commentMemberId').val() != $('#loginMemberId').val()) && ($('#loginMemberId').val() != "admin")) {
+				alert("댓글 작성자또는 관리자만 삭제 할 수 있습니다.");
 				return;
 			}
 			$('#deleteForm').submit();
@@ -145,8 +147,9 @@
         <div>
         	<input type="hidden" th:value="${loginMemberId}" id="loginMemberId" class="loginMemberId">
         </div>
-        <div><hr>
-        	<!-- 댓글 입력 -->
+        <!-- 댓글 입력 -->
+        <!-- 일반회원 입력 -->
+        <div th:if="${session.loginMember?.memberId}"><hr>
 	        <form method="post" th:action="@{/addComment}" id="commentForm">
 	        <div class="input-group mb-3 d-flex justify-content-center">
 				<input type="text" name="commentContent" id="commentContent" class="form-control" placeholder="댓글을 입력하세요.">
@@ -157,11 +160,28 @@
  				</div>
 			</div>
 	        </form>
-        </div><hr>
+        </div>
+        <!-- 관리자 입력 -->
+        <div th:unless="${session.loginMember?.memberId}"><hr>
+	        <form method="post" th:action="@{/addComment}" id="commentForm">
+	        <div class="input-group mb-3 d-flex justify-content-center">
+				<input type="text" name="commentContent" id="commentContent" class="form-control" placeholder="댓글을 입력하세요.">
+				<input type="hidden" name="boardNo" th:value="${board.boardNo}">
+				<input type="hidden" th:value="${loginMemberId}" name="adminId">
+				<div class="input-group-append">
+ 					<button type="button" id="commentBtn" class="btn btn-secondary">댓글입력</button>
+ 				</div>
+			</div>
+	        </form>
+        </div>
+        <hr>
         <!-- 댓글 리스트 반복문 시작부분 -->
         <h5>작성자 / 댓글내용</h5>
         <div th:each="list : ${commentList}" style="text-aling:center; text-align:center;">
         	<div class="input-group mb-3 d-flex justify-content-center" style="width:1120x;">
+        		<div th:if="${list.memberId} == 'admin'" class="input-group-append">
+	        		<input type="text" value="관리자" class="form-control" readonly="readonly" style="width:75px; color:white; background-color:blue;">
+				</div>
 				<input type="text" name="memberId" id="commentMemberId" class="form-control commentMemberId" style="width:300px;" th:value="${list.memberId}" readonly="readonly">
 				<div class="input-group-append">
  					<input type="text" name="commentContent" id="commentContent2" class="form-control" style="width:800px;" th:value="${list.commentContent}" readonly="readonly">
