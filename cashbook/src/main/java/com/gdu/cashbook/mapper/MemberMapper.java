@@ -2,6 +2,7 @@ package com.gdu.cashbook.mapper;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,7 +20,7 @@ public interface MemberMapper {
 	public int removeByAdmin(String memberId);
 	
 	// 멤버 리스트 출력
-	public List<Member> selectMemberListAll(int beginRow, int rowPerPage);
+	public List<Member> selectMemberListAll(Map<String, Object> map);
 	
 	// 아이디와 이멜일을 입력해서 리턴값이 있는지 없는지를 알아내는 메소드
 	public int updateMemberPw(Member member); 

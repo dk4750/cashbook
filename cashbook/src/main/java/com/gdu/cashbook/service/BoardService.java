@@ -94,7 +94,6 @@ public class BoardService {
 		int beginRow = (currentPage-1)*rowPerPage;
 		//일회용 맵
 		Map<String, Object> map = new HashMap<>();
-		
 		map.put("searchWord", searchWord);
 		map.put("beginRow", beginRow);
 		map.put("rowPerPage", rowPerPage);

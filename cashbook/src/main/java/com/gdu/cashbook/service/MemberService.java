@@ -55,8 +55,13 @@ public class MemberService {
 	}
 	
 	// 멤버 리스트 출력
-	public Map<String, Object> getMemberListAll(int currentPage) {
+	public Map<String, Object> getMemberListAll(Map<String, Object> mappp) {
 		// 현재페이지 디버깅, 페이지당 갯수설정, 시작열 설정.
+		int currentPage = (int)mappp.get("currentPage");
+		String searchWord = (String)mappp.get("searchWord");
+		System.out.println(currentPage + " <== currentPage Service");
+		System.out.println(searchWord + " <== searchWord Service");
+		
 		System.out.println(currentPage);
 		int rowPerPage = 12;
 		int beginRow = (currentPage-1)*rowPerPage;
@@ -74,9 +79,10 @@ public class MemberService {
 		Map<String, Object> mapp = new HashMap<String, Object>();
 		mapp.put("beginRow", beginRow);
 		mapp.put("rowPerPage", rowPerPage);
+		mapp.put("searchWord", searchWord);
 		
 		// 페이징 된 멤버 리스트
-		List<Member> list = memberMapper.selectMemberListAll(beginRow, rowPerPage);
+		List<Member> list = memberMapper.selectMemberListAll(mapp);
 		System.out.println(list);
 		
 		// 일회용 맵
