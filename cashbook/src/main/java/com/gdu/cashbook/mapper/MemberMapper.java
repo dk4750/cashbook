@@ -11,11 +11,15 @@ import com.gdu.cashbook.vo.Member;
 // 매퍼기능 에노테이션, 객체생성
 @Mapper
 public interface MemberMapper {
+	
+	// 멤버 총명수 구하기
+	public int getTotalMember();
+	
 	// 멤버 한명 삭제.. 관리자기능
 	public int removeByAdmin(String memberId);
 	
 	// 멤버 리스트 출력
-	public List<Member> selectMemberListAll();
+	public List<Member> selectMemberListAll(int beginRow, int rowPerPage);
 	
 	// 아이디와 이멜일을 입력해서 리턴값이 있는지 없는지를 알아내는 메소드
 	public int updateMemberPw(Member member); 

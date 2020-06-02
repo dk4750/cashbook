@@ -22,21 +22,21 @@
 		<br>
 		<div class="d-flex justify-content-between">
   			<div class="p-2">
-  				<a th:href="@{/getBoardList(currentPage=1, searchWord=${searchWord})}" style="float: left;" class="btn btn-secondary">처음페이지</a>
+  				<a th:href="@{/getMemberList(currentPage=1)}" style="float: left;" class="btn btn-secondary">처음페이지</a>
   			</div>
   			<div class="p-2">
   				<!-- 이전페이지 -로 안넘어가게 if문 설정 -->
-				<a th:if="${currentPage >= 2}" th:href="@{/getBoardList(currentPage=${currentPage - 1}, searchWord=${searchWord})}" style="float: left;" class="btn btn-secondary">이전</a>
-				<a th:unless="${currentPage >= 2}" th:href="@{/getBoardList(currentPage=1, searchWord=${searchWord})}" style="float: left;" class="btn btn-secondary">이전</a>
+				<a th:if="${currentPage >= 2}" th:href="@{/getMemberList(currentPage=${currentPage-1})}" style="float: left;" class="btn btn-secondary">이전</a>
+				<a th:unless="${currentPage >= 2}" th:href="@{/getMemberList(currentPage=1)}" style="float: left;" class="btn btn-secondary">이전</a>
   			</div>
   			<pre>                                                                                           </pre>
   			<div class="p-2">
   				<!-- 다음페이지 lastPage 안넘어가게 if문 설정 -->
-				<a th:if="${currentPage < lastPage}" th:href="@{/getBoardList(currentPage=${currentPage + 1}, searchWord=${searchWord})}" style="float: right;" class="btn btn-secondary">다음</a>
-				<a th:unless="${currentPage < lastPage}" th:href="@{/getBoardList(currentPage=${lastPage}, searchWord=${searchWord})}" style="float: right;" class="btn btn-secondary">다음</a>
+				<a th:if="${currentPage < lastPage}" th:href="@{/getMemberList(currentPage=${currentPage+1})}" style="float: right;" class="btn btn-secondary">다음</a>
+				<a th:unless="${currentPage < lastPage}" th:href="@{/getMemberList(currentPage=${lastPage})}" style="float: right;" class="btn btn-secondary">다음</a>
   			</div>
   			<div class="p-2">
-  				<a th:href="@{/getBoardList(currentPage=${lastPage}, searchWord=${searchWord})}" style="float: right;" class="btn btn-secondary">마지막페이지</a>
+  				<a th:href="@{/getMemberList(currentPage=${lastPage})}" style="float: right;" class="btn btn-secondary">마지막페이지</a>
   			</div>
   		</div>
 		<br>

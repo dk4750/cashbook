@@ -1,6 +1,7 @@
 package com.gdu.cashbook.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -34,15 +35,24 @@ public class MemberController {
 	
 	// 멤버 리스트 전체출력
 	@GetMapping("/getMemberList")
-	public String getMemberList(HttpSession session, Model model) {
+	public String getMemberList(HttpSession session, Model model,@RequestParam(value="currentPage", defaultValue = "1") int currentPage) {
+		// 세션검사
 		if(session.getAttribute("admin") == null || session.getAttribute("loginMember") != null) {
 			return "redirect:/home";
 		}
 		
-		List<Member> list = memberService.getMemberListAll();
-		System.out.println(list + " <== memberList");
+		// 들어온 커런트페이지 디버깅
+		System.out.println(currentPage + " <== currentPage");
 		
-		model.addAttribute("list", list);
+		// 리스트 출력.. lastPage때문에 맵타입으로 받음
+		Map<String, Object> map = memberService.getMemberListAll(currentPage);
+		
+		// 모델에 list 담아서 보내기.
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		
+		// 페이지요청
 		return "getMemberList";
 	}
 	

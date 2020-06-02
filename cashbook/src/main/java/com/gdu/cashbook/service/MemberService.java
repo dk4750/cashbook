@@ -2,7 +2,9 @@ package com.gdu.cashbook.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +55,35 @@ public class MemberService {
 	}
 	
 	// 멤버 리스트 출력
-	public List<Member> getMemberListAll() {
-		return memberMapper.selectMemberListAll();
+	public Map<String, Object> getMemberListAll(int currentPage) {
+		// 현재페이지 디버깅, 페이지당 갯수설정, 시작열 설정.
+		System.out.println(currentPage);
+		int rowPerPage = 12;
+		int beginRow = (currentPage-1)*rowPerPage;
+		System.out.println(beginRow);
+		
+		// 총 멤버수
+		int totalRow = memberMapper.getTotalMember();
+		System.out.println(totalRow);
+		int lastPage = totalRow/rowPerPage;
+		if(totalRow%rowPerPage != 0) {
+			lastPage +=1;
+		}
+		System.out.println(lastPage);
+		
+		Map<String, Object> mapp = new HashMap<String, Object>();
+		mapp.put("beginRow", beginRow);
+		mapp.put("rowPerPage", rowPerPage);
+		
+		// 페이징 된 멤버 리스트
+		List<Member> list = memberMapper.selectMemberListAll(beginRow, rowPerPage);
+		System.out.println(list);
+		
+		// 일회용 맵
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("lastPage", lastPage);
+		map.put("list", list);
+		return map;
 	}
 	
 	// 멤버 비밀번호 찾기.
