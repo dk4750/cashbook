@@ -50,7 +50,7 @@
 				<!-- 제목 --><br><br><br><br><br><br><br><br>
 				<h1 style="margin: 40px; text-align:center">로그인</h1>
 				<!-- 로그인 폼 -->
-				<form method="post" action="/login" id="myForm">
+				<form method="post" th:action="@{/login}" id="myForm">
 					<div>
 						아이디<br>
 						<input type="text" name="memberId" id="memberId" class="form-control" placeholder="아이디를 입력하세요.">

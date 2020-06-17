@@ -87,7 +87,7 @@
 				
 				<!-- 중복확인 폼 -->
 				<!-- 글자 형태로 전송하는 enctype.. -->
-				<form id="idForm" method="post" action="/checkMemberId" enctype="application/x-www-form-urlencoded">
+				<form id="idForm" method="post" th:action="@{/checkMemberId}" enctype="application/x-www-form-urlencoded">
 					아이디 중복확인<br>
 					<div class="input-group mb-3">
   						<input type="text" name="memberIdCheck" id="memberIdCheck" placeholder="아이디를 입력하세요." class="form-control">
@@ -101,7 +101,7 @@
 				
 				<!-- 회원가입 폼 -->
 				<!-- 바이트 형태로 전송하는 enctype.. -->
-				<form id = "myForm" method = "post" action="/addMember" enctype="multipart/form-data">
+				<form id = "myForm" method = "post" th:action="@{/addMember}" enctype="multipart/form-data">
 					
 					<div>
 						아이디<br>
