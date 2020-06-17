@@ -9,11 +9,11 @@ import com.gdu.cashbook.vo.Board;
 
 @Mapper
 public interface BoardMapper {
-	// 해당 게시글 넘버의 다음 컬럼 넘버를 가져오는 쿼리
-	public int nextNo(int boardNo);
-	
-	// 해당 게시글 넘버의 이전 넘버 가져오는 쿼리
-	public int previousNo(int boardNo);
+	/*
+	 * // 해당 게시글 넘버의 다음 컬럼 넘버를 가져오는 쿼리 public int nextNo(int boardNo);
+	 * 
+	 * // 해당 게시글 넘버의 이전 넘버 가져오는 쿼리 public int previousNo(int boardNo);
+	 */
 	
 	// 게시글 전체삭제 (회원탈퇴시 사용)
 	public int removeBoardAll(String memberId);

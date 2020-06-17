@@ -60,22 +60,27 @@ public class BoardService {
 		int firstBoardNo = boardMapper.firstBoardNo();
 		int lastBoardNo = boardMapper.lastBoardNo();
 		Board board = boardMapper.selectBoardOne(boardNo);
-		int previousNo = boardMapper.previousNo(boardNo);
-		int nextNo = boardMapper.nextNo(boardNo);
+		/*
+		 * int previousNo = boardMapper.previousNo(boardNo); int nextNo =
+		 * boardMapper.nextNo(boardNo);
+		 */
 		
 		
 		// 디버깅
 		System.out.println(firstBoardNo);
 		System.out.println(lastBoardNo);
 		System.out.println(board);
-		System.out.println(previousNo + " <== 이전 컬럼 보드넘버");
-		System.out.println(nextNo + " <== 다음 컬럼 보드넘버");
+		/*
+		 * System.out.println(previousNo + " <== 이전 컬럼 보드넘버"); System.out.println(nextNo
+		 * + " <== 다음 컬럼 보드넘버");
+		 */
 		System.out.println(commentList + " <== 댓글 리스트");
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("commentList", commentList);
-		map.put("previousNo", previousNo);
-		map.put("nextNo", nextNo);
+		/*
+		 * map.put("previousNo", previousNo); map.put("nextNo", nextNo);
+		 */
 		map.put("firstBoardNo", firstBoardNo);
 		map.put("lastBoardNo", lastBoardNo);
 		map.put("board", board);

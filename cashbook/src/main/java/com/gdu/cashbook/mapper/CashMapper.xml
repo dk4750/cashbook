@@ -6,7 +6,7 @@
 <mapper namespace="com.gdu.cashbook.mapper.CashMapper">
 	<!-- Cash 내역 업데이트하기 -->
 	<update id="modifyCash" parameterType="com.gdu.cashbook.vo.Cash">
-		UPDATE cash
+		UPDATE cashbook_cash
 		SET cash_kind = #{cashKind},
 			category_name = #{categoryName},
 			cash_price = #{cashPrice},
@@ -17,7 +17,7 @@
 	
 	<!-- Cash 내역 인서트하기 -->
 	<insert id="addCash" parameterType="com.gdu.cashbook.vo.Cash">
-		INSERT INTO cash
+		INSERT INTO cashbook_cash
 				(member_id, 
 				cash_date, 
 				cash_kind, 
@@ -37,7 +37,7 @@
 	<!-- memberId를 받아 해당 멤버의 cash를 모두 삭제하는 쿼리.. 멤버삭제 트랜잭션때문에 필요 -->
 	<delete id="removeCashByMember" parameterType="String">
 		DELETE
-		FROM cash
+		FROM cashbook_cash
 		WHERE member_id = #{memberId}
 	</delete>
 	<!-- 날짜를 입력받아서 일짜별 수입,지출의 합을 출력하는 쿼리 -->
@@ -45,7 +45,7 @@
 		SELECT	DAY(cash_date) as day,
 		SUM(CASE WHEN cash_kind='수입' THEN cash_price
 			WHEN cash_kind='지출' THEN -cash_price END) as price
-		FROM cash
+		FROM cashbook_cash
 		WHERE YEAR(cash_date) = #{year}
 		AND MONTH(cash_date) = #{month}
 		AND member_id = #{memberId}
@@ -60,7 +60,7 @@
 			cash_price as cashPrice,
 			cash_place as cashPlace,
 			cash_memo as cashMemo
-		FROM cash
+		FROM cashbook_cash
 		WHERE cash_no = #{cashNo}
 	</select>
 
@@ -69,13 +69,13 @@
 		SELECT
       		IFNULL
 				(IFNULL((SELECT SUM(cash_price) 
-				FROM cash 
+				FROM cashbook_cash 
 				WHERE cash_date = #{cashDate} 
 				AND cash_kind = '수입' 
 				AND member_id = #{memberId}), 0)
       		-
       		IFNULL((SELECT SUM(cash_price) 
-      		FROM cash WHERE cash_date = #{cashDate} 
+      		FROM cashbook_cash WHERE cash_date = #{cashDate} 
       		AND cash_kind = '지출' 
       		AND member_id = #{memberId}), 0), 0)
 		FROM dual
@@ -90,7 +90,7 @@
 			cash_price as cashPrice,
 			cash_place as cashPlace,
 			cash_memo as cashMemo
-		FROM cash
+		FROM cashbook_cash
 		WHERE member_id = #{memberId}
 		AND cash_date = #{cashDate}
 		ORDER BY cash_no ASC
@@ -99,7 +99,7 @@
 	<!-- cashNo를 받아서 해당 컬럼 삭제하는쿼리 -->
 	<delete id="removeCash" parameterType="int">
 		DELETE
-		FROM cash
+		FROM cashbook_cash
 		WHERE cash_no = #{cashNo}
 	</delete>
 </mapper>

@@ -7,7 +7,7 @@
 	<select id="selectAdmin" parameterType="com.gdu.cashbook.vo.Admin" resultType="com.gdu.cashbook.vo.Admin">
 		SELECT
 			admin_id as adminId
-		FROM admin
+		FROM cashbook_admin
 		WHERE admin_id = #{adminId}
 		AND admin_pw = #{adminPw}
 	</select>

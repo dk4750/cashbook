@@ -9,12 +9,12 @@
 	<!-- 멤버 총 명 수 구하기 -->
 	<select id="getTotalMember" resultType="int">
 		SELECT COUNT(*)
-		FROM member
+		FROM cashbook_member
 	</select>
 	
 	<!-- 멤버 한명 삭제.. 관리자 기능 -->
 	<delete id="removeByAdmin" parameterType="String">
-		DELETE FROM member
+		DELETE FROM cashbook_member
 		WHERE member_id = #{memberId}
 	</delete>
 		
@@ -26,7 +26,7 @@
 			member_phone as memberPhone,
 			member_addr as memberAddr,
 			member_mail as memberMail
-		FROM member
+		FROM cashbook_member
 		WHERE member_id LIKE CONCAT('%', #{searchWord}, '%')
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
@@ -34,7 +34,7 @@
 	<!-- 멤버 탈퇴시 사진 이름 가져오기 -->
 	<select id="selectMemberPic" parameterType="String" resultType="String">
 		SELECT member_pic
-		FROM member
+		FROM cashbook_member
 		WHERE member_id = #{memberId}
 	</select>
 	
@@ -44,7 +44,7 @@
 		2. pw를 메일로 전송
 	 -->
 	<update id="updateMemberPw" parameterType="com.gdu.cashbook.vo.Member">
-		UPDATE member
+		UPDATE cashbook_member
 		SET member_pw = PASSWORD(#{memberPw})
 		WHERE member_id = #{memberId}
 		AND member_mail = #{memberMail}
@@ -54,7 +54,7 @@
 	<select id="selectMemberIdByMember" parameterType="com.gdu.cashbook.vo.Member" resultType="String">
 		SELECT
 			CONCAT(SUBSTRING(member_id, 1, 3) ,'****')
-		FROM member
+		FROM cashbook_member
 		WHERE member_name = #{memberName}
 		AND	member_mail = #{memberMail}
 		AND member_phone = #{memberPhone}
@@ -62,7 +62,7 @@
 	
 	<!-- 삭제시 memberid 테이블에 추가되는쿼리 -->
 	<insert id="insertMemberId" parameterType="String">
-		INSERT INTO memberid(
+		INSERT INTO cashbook_memberid(
 			member_id
 		) VALUES (
 			#{memberId}
@@ -71,14 +71,14 @@
 	
 	<!-- 멤버 삭제 -->
 	<delete id="removeMember" parameterType="com.gdu.cashbook.vo.LoginMember">
-		DELETE FROM member
+		DELETE FROM cashbook_member
 		WHERE member_id = #{memberId}
 		AND member_pw = PASSWORD(#{memberPw})
 	</delete>
 	
 	<!-- 멤버 정보 수정 -->
 	<update id="modifyMember" parameterType="com.gdu.cashbook.vo.Member">
-		UPDATE member
+		UPDATE cashbook_member
 		SET
 			member_pw = PASSWORD(#{memberPw}),
 			member_name = #{memberName},
@@ -101,7 +101,7 @@
 			member_addr as memberAddr,
 			member_mail as memberMail,
 			member_pic as memberPic
-		FROM member
+		FROM cashbook_member
 		WHERE member_id = #{memberId}
 	</select>
 	
@@ -114,7 +114,7 @@
 			member_addr as memberAddr,
 			member_mail as memberMail,
 			member_pic as memberPic
-		FROM member
+		FROM cashbook_member
 		WHERE member_id = #{memberId}
 	</select>
 	
@@ -122,9 +122,9 @@
 	<select id="selectMemberId" parameterType="String" resultType="String">
 		SELECT member_id
 		FROM
-			(SELECT member_id FROM member
+			(SELECT member_id FROM cashbook_member
 			UNION
-			SELECT member_id FROM memberid) t
+			SELECT member_id FROM cashbook_memberid) t
 		WHERE member_id = #{memberIdCheck}
 	</select>
 	
@@ -134,14 +134,14 @@
 			member_id as memberId,
 			member_pw as memberPw,
 			member_pic as memberPic
-		FROM member
+		FROM cashbook_member
 		WHERE member_id = #{memberId}
 		AND member_pw = PASSWORD(#{memberPw})
 	</select>
 	
 	<!-- 멤버 인서트 -->
 	<insert id="addMember" parameterType="com.gdu.cashbook.vo.Member">
-		INSERT INTO member(
+		INSERT INTO cashbook_member(
 			member_id,
 			member_pw,
 			member_name,

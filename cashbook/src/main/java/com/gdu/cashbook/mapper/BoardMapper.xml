@@ -4,45 +4,45 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 네임스페이스는 매퍼의 위치와 매퍼의 이름 -->
 <mapper namespace="com.gdu.cashbook.mapper.BoardMapper">
-	<!-- 해당 게시글 넘버의 이전 넘버 가져오는 쿼리 -->
+	 <!-- 해당 게시글 넘버의 이전 넘버 가져오는 쿼리
 	<select id="previousNo" resultType="int" parameterType="int">
 		SELECT IFNULL(t.boardNo, #{boardNo})
 		FROM(
 			SELECT  board_no,
 			LAG(board_no) OVER (ORDER BY board_no) AS boardNo
-    		FROM    board
+    		FROM    cashbook_board
     		ORDER BY board_no
 		) t
 		WHERE board_no = #{boardNo}
 	</select>
 	
-	<!-- 해당 게시글 넘버의 다음 컬럼 넘버를 가져오는 쿼리 -->
+	해당 게시글 넘버의 다음 컬럼 넘버를 가져오는 쿼리
 	<select id="nextNo" resultType="int" parameterType="int">
 		SELECT IFNULL(t.boardNo, #{boardNo})
 		FROM(
 			SELECT  board_no,
 			LEAD(board_no) OVER (ORDER BY board_no) AS boardNo
-    		FROM    board
+    		FROM    cashbook_board
     		ORDER BY board_no
 		) t
 		WHERE board_no = #{boardNo}
-	</select>
+	</select> -->
 	
 	<!-- 게시글 전체삭제 -->
 	<delete id="removeBoardAll" parameterType="String">
-		DELETE FROM board
+		DELETE FROM cashbook_board
 		WHERE member_id = #{memberId}
 	</delete>
 	
 	<!-- 게시글 삭제 -->
 	<delete id="removeBoard" parameterType="int">
-		DELETE FROM board
+		DELETE FROM cashbook_board
 		WHERE board_no = #{boardNo}
 	</delete>
 
 	<!-- 게시글 수정 -->
 	<update id="modifyBoard" parameterType="com.gdu.cashbook.vo.Board">
-		UPDATE board
+		UPDATE cashbook_board
 		SET
 			board_title = #{boardTitle},
 			board_content = #{boardContent}
@@ -51,7 +51,7 @@
 
 	<!-- 게시글 생성 -->
 	<insert id="addBoard" parameterType="com.gdu.cashbook.vo.Board">
-		INSERT INTO board
+		INSERT INTO cashbook_board
 			(board_title,
 			board_content,
 			member_id,
@@ -69,14 +69,14 @@
 	<select id="firstBoardNo" resultType="int">
 		SELECT
 			MIN(board_no)
-		FROM board
+		FROM cashbook_board
 	</select>
 	
 	<!-- 이전 다음 게시글 출력을 위해 마지막 번호를 구해오기. -->
 	<select id="lastBoardNo" resultType="int">
 		SELECT
 			MAX(board_no)
-		FROM board
+		FROM cashbook_board
 	</select>
 
 	<!-- 리스트출력, 페이징 -->
@@ -86,7 +86,7 @@
 			board_title as boardTitle,
 			board_date as boardDate,
 			member_id as memberId
-		FROM board
+		FROM cashbook_board
 		WHERE board_title LIKE CONCAT('%', #{searchWord}, '%')
 		ORDER BY board_no DESC
 		LIMIT #{beginRow}, #{rowPerPage}
@@ -96,7 +96,7 @@
 	<select id="getTotalRow" resultType="int">
 		SELECT
 			COUNT(*)
-		FROM board
+		FROM cashbook_board
 		WHERE board_title LIKE CONCAT('%', #{searchWord}, '%')
 	</select>
 	
@@ -108,7 +108,7 @@
 			board_content as boardContent,
 			board_date as boardDate,
 			member_id as memberId
-		FROM board
+		FROM cashbook_board
 		WHERE board_no = #{boardNo}
 	</select>
 </mapper>

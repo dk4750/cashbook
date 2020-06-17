@@ -7,19 +7,19 @@
 	<!-- 카테고리 이름 가져오는 쿼리 -->
 	<select id="selectCategoryName" parameterType="String" resultType="com.gdu.cashbook.vo.Category">
 		SELECT category_name as categoryName
-		FROM category
+		FROM cashbook_category
 		WHERE member_id = #{memberId}
 	</select>
 	
 	<!-- 카테고리 추가 -->
 	<insert id="addCategory" parameterType="Map">
-		INSERT INTO category(category_name, member_id) VALUES(#{categoryName}, #{memberId})
+		INSERT INTO cashbook_category(category_name, member_id) VALUES(#{categoryName}, #{memberId})
 	</insert>
 	
 	<!-- 카테고리 삭제 -->
 	<delete id="removeCategory" parameterType="Map">
 		DELETE FROM
-			category
+			cashbook_category
 		WHERE category_name = #{categoryName}
 		AND member_id = #{memberId}
 	</delete>
@@ -27,7 +27,7 @@
 	<!-- 카테고리 전체삭제 -->
 	<delete id="removeCategoryAll" parameterType="String">
 		DELETE FROM
-			category
+			cashbook_category
 		WHERE member_id = #{memberId}
 	</delete>
 </mapper>

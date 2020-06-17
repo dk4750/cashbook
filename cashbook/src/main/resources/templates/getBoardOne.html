@@ -104,12 +104,12 @@
 	<div class="container">
 		<br>
 		<h1 style="text-align:center;">게시판 상세보기</h1><br>
-		<!-- 이전, 다음번호 if문 분기 -->
+		<!--이전, 다음번호 if문 분기
 		<a th:if="${board.boardNo} == ${firstBoardNo}" th:href="@{/getBoardOne(boardNo=(${board.boardNo}))}" style="float: left;" class="btn btn-secondary">이전글</a>
 		<a th:unless="${board.boardNo} == ${firstBoardNo}" th:href="@{/getBoardOne(boardNo=${previousNo})}" style="float: left;" class="btn btn-secondary">이전글</a>
 		
 		<a th:if="${board.boardNo} == ${lastBoardNo}" th:href="@{/getBoardOne(boardNo=(${board.boardNo}))}" style="float: right;" class="btn btn-secondary">다음글</a>
-		<a th:unless="${board.boardNo} == ${lastBoardNo}" th:href="@{/getBoardOne(boardNo=${nextNo})}" style="float: right;" class="btn btn-secondary">다음글</a>
+		<a th:unless="${board.boardNo} == ${lastBoardNo}" th:href="@{/getBoardOne(boardNo=${nextNo})}" style="float: right;" class="btn btn-secondary">다음글</a> -->
 		<br><br><br>
 		<div>
 			글제목

@@ -6,7 +6,7 @@
 <mapper namespace="com.gdu.cashbook.mapper.MemberidMapper">
 	<!-- 삭제시 memberid 테이블에 추가되는쿼리 -->
 	<insert id="insertMemberId" parameterType="String">
-		INSERT INTO memberid(
+		INSERT INTO cashbook_memberid(
 			member_id
 		) VALUES (
 			#{memberId}
