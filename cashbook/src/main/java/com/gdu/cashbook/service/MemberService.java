@@ -37,7 +37,7 @@ public class MemberService {
 	@Autowired private CategoryMapper categoryMapper;
 	@Autowired private CommentMapper commentMapper;
 	
-	@Value("C:\\Users\\gd7\\Documents\\workspace-spring-tool-suite-4-4.6.1.RELEASE\\maven.1590486053513\\cashbook\\src\\main\\resources\\static\\upload\\")
+	@Value("/dk4750/tomcat/webapps/cashbook/WEB-INF/classes/static/upload/")
 	private String path;
 	
 	// 멤버 한명 삭제.. 관리자 기능
@@ -236,7 +236,7 @@ public class MemberService {
 		return memberMapper.selectLoginMember(loginMember);
 	}
 	
-	// 컨트롤러가 호출 할 멤버 추가 메소드
+	// 컨트롤러가 호출 할 멤버 추가
 	@Transactional
 	public boolean addMember(MemberForm memberForm) {
 		// 멤버 생성

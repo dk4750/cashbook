@@ -21,8 +21,8 @@
 	$(document).ready(function(){
 		$('#btn').click(function(){
 			helperInit();
-			if($('#memberName').val().length < 4) {
-				$('#nameHelper').text("아이디를 4글자 이상 입력하세요.")
+			if($('#memberName').val().length == 0) {
+				$('#nameHelper').text("이름을 입력하세요.")
 				return;
 			} else if($('#memberMail').val().length == 0) {
 				$('#mailHelper').text("이메일을 입력하세요.")
@@ -51,17 +51,17 @@
 				<form id="form" method="post" th:action="@{/findMemberId}">
 					<div>
 						이름
-						<input type="text" name="memberName" id="memberName" class="form-control">
+						<input type="text" name="memberName" id="memberName" class="form-control" placeholder="이름을 입력하세요.">
 						<span id="nameHelper" style="color:red;"></span>
 					</div><br>
 					<div>
 						이메일
-						<input type="text" name="memberMail" id="memberMail" class="form-control">
+						<input type="text" name="memberMail" id="memberMail" class="form-control" placeholder="ex) example@example.com">
 						<span id="mailHelper" style="color:red;"></span>
 					</div><br>
 					<div>
 						전화번호
-						<input type="text" name="memberPhone" id="memberPhone" class="form-control">
+						<input type="text" name="memberPhone" id="memberPhone" class="form-control" placeholder="ex) 000-0000-0000">
 						<span id="phoneHelper" style="color:red;"></span>
 					</div>
 					<div th:text="${msg}" style="color:red;"></div>
